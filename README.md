@@ -1,2 +1,127 @@
-# my-own-projects
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dalida CV Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap');
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #0f172a;
+            color: #f8fafc;
+        }
+        .glow-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+            transition: all 0.4s ease;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .desc-text { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="selection:bg-indigo-500 selection:text-white">
+
+    <header class="py-12 px-6 text-center border-b border-slate-800 bg-slate-900/50">
+        <h1 class="text-4xl md:text-6xl font-bold mb-4 gradient-text">Рысмендеева Далида</h1>
+        <p class="text-xl text-indigo-300 font-light tracking-widest">24 ШГ • 10 КЛАСС</p>
+        <div class="mt-6 inline-block px-4 py-2 bg-indigo-500/10 border border-indigo-500/30 rounded-full">
+            <span class="text-indigo-400"># Computer Vision Developer</span>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-16">
+        <h2 class="text-3xl font-bold mb-12 flex items-center">
+            <i class="fas fa-microchip mr-4 text-indigo-500"></i>
+            Мои проекты по CV (24 этапа)
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            
+            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden glow-card">
+                <div class="h-48 bg-slate-900 flex items-center justify-center relative group">
+                    <video controls class="w-full h-full object-cover">
+                        <source src="project1.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                    <div class="absolute top-4 left-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                        Project #1
+                    </div>
+                </div>
+                
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-3 text-indigo-300">Шум и Фильтры: чистим кадры</h3>
+                    
+                    <div class="desc-text space-y-2 text-sm text-slate-400 mb-4">
+                        <p class="text-xs italic text-slate-500 mb-2">Результат и эффекты:</p>
+                        <div class="bg-slate-900/50 p-2 rounded border-l-2 border-blue-500">
+                            <span class="text-blue-400 font-bold">Blur:</span> Быстро, но грубо. Усредняет соседние пиксели. Убирает шум, но стирает детали.
+                        </div>
+                        <div class="bg-slate-900/50 p-2 rounded border-l-2 border-purple-500">
+                            <span class="text-purple-400 font-bold">Gaussian:</span> Мягко и аккуратно. Сглаживает с учетом расстояния.
+                        </div>
+                        <div class="bg-slate-900/50 p-2 rounded border-l-2 border-emerald-500">
+                            <span class="text-emerald-400 font-bold">Median:</span> Щадит края и убирает точечный шум. Использует медиану.
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-1 rounded border border-indigo-500/30">OpenCV</span>
+                        <span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-1 rounded border border-indigo-500/30">Python</span>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                for(let i=2; i<=24; i++) {
+                    document.write(`
+                        <div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden glow-card opacity-60">
+                            <div class="h-48 bg-slate-900 flex items-center justify-center relative group">
+                                <i class="fas fa-lock text-slate-700 text-4xl"></i>
+                                <div class="absolute top-4 left-4 bg-slate-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                                    Project #${i}
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold mb-2 text-slate-500">Будущий проект</h3>
+                                <p class="text-sm text-slate-600 mb-4 desc-text">Этот проект будет добавлен позже по мере прохождения курса...</p>
+                                <div class="flex space-x-2">
+                                    <span class="text-[10px] bg-slate-700/50 text-slate-600 px-2 py-1 rounded">Wait</span>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                }
+            </script>
+
+        </div>
+    </main>
+
+    <footer id="contacts" class="bg-slate-950 border-t border-slate-800 py-16 px-6 mt-20">
+        <div class="container mx-auto text-center">
+            <h3 class="text-2xl font-bold mb-8">Давай работать вместе</h3>
+            <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-12">
+                <a href="tel:0554306190" class="flex items-center text-slate-300 hover:text-indigo-400 transition">
+                    <i class="fas fa-phone-alt mr-3 text-indigo-500"></i>
+                    0554306190
+                </a>
+                <a href="mailto:rysmendeevadalida01@gmail.com" class="flex items-center text-slate-300 hover:text-indigo-400 transition">
+                    <i class="fas fa-envelope mr-3 text-indigo-500"></i>
+                    rysmendeevadalida01@gmail.com
+                </a>
+            </div>
+            <div class="mt-12 pt-8 border-t border-slate-900 text-slate-500 text-sm">
+                <p>&copy; 2026 • Рысмендеева Далида. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html># my-own-projects
 about me
