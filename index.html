@@ -35,7 +35,7 @@
                 </div>
             </div>
 
-            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden glow-card border-indigo-500/30">
+            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden glow-card">
                 <div class="h-48 bg-slate-900">
                     <video controls class="w-full h-full object-cover">
                         <source src="project2.mp4" type="video/mp4">
@@ -51,8 +51,24 @@
                 </div>
             </div>
 
+            <div class="bg-slate-800/50 border border-indigo-500/50 rounded-2xl overflow-hidden glow-card">
+                <div class="h-48 bg-slate-900">
+                    <video controls class="w-full h-full object-cover">
+                        <source src="project3.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold mb-2 text-indigo-300">Детектор Canny</h3>
+                    <p class="text-sm text-slate-400 mb-4">Многоступенчатый алгоритм для получения тонких и точных контуров без лишнего шума.</p>
+                    <div class="text-[10px] space-y-1 text-slate-500">
+                        <p>• <span class="text-indigo-400 font-bold">Цель:</span> подавление шума и выделение максимально четких структурных линий.</p>
+                        <p>• <span class="text-indigo-400 font-bold">Применение:</span> сегментация объектов и распознавание форм.</p>
+                    </div>
+                </div>
+            </div>
+
             <script>
-                for(let i=3; i<=24; i++) {
+                for(let i=4; i<=24; i++) {
                     document.write(`
                         <div class="bg-slate-800/20 border border-slate-800 rounded-2xl h-72 flex items-center justify-center opacity-40">
                             <span class="text-slate-600">Project #${i}</span>
