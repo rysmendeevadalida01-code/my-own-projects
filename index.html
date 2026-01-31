@@ -66,7 +66,7 @@
                 </div>
             </div>
 
-            <div class="bg-slate-800/50 border border-indigo-500/50 rounded-2xl overflow-hidden glow-card">
+            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden glow-card">
                 <div class="h-48 bg-slate-900">
                     <video controls class="w-full h-full object-cover">
                         <source src="project4.mp4" type="video/mp4">
@@ -76,14 +76,31 @@
                     <h3 class="text-lg font-bold mb-2 text-indigo-300">Применение методов бинаризации</h3>
                     <p class="text-sm text-slate-400 mb-4 italic">Binarization Methods: Simple, Adaptive, and Otsu Thresholding.</p>
                     <div class="text-[10px] space-y-1 text-slate-500">
-                        <p>• <span class="text-indigo-400 font-bold">Purpose:</span> To convert grayscale images into binary (black and white) format for easier object isolation.</p>
-                        <p>• <span class="text-indigo-400 font-bold">Benefit:</span> Essential for character recognition (OCR) and removing inconsistent lighting or shadows from documents.</p>
+                        <p>• <span class="text-indigo-400 font-bold">Purpose:</span> Преобразование в Ч/Б формат для изоляции объектов.</p>
+                        <p>• <span class="text-indigo-400 font-bold">Benefit:</span> Удаление теней и подготовка маски к анализу.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-800/50 border border-indigo-500/50 rounded-2xl overflow-hidden glow-card">
+                <div class="h-48 bg-slate-900">
+                    <video controls class="w-full h-full object-cover">
+                        <source src="project5.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold mb-2 text-indigo-300">Морфология бинарных изображений</h3>
+                    <p class="text-sm text-slate-400 mb-4">Применение операций Open и Close для очистки маски от шума и заполнения внутренних пустот.</p>
+                    <div class="text-[10px] space-y-1 text-slate-500">
+                        <p>• <span class="text-indigo-400 font-bold">Объяснение:</span> Open удаляет мелкий шум, Close закрывает дыры внутри объекта.</p>
+                        <p>• <span class="text-indigo-400 font-bold">Отчёт:</span> Анализ изменений структуры после применения структурного элемента 3x3.</p>
                     </div>
                 </div>
             </div>
 
             <script>
-                for(let i=5; i<=24; i++) {
+                // Цикл теперь начинается с 6, так как 1-5 проекты добавлены вручную
+                for(let i=6; i<=24; i++) {
                     document.write(`
                         <div class="bg-slate-800/20 border border-slate-800 rounded-2xl h-72 flex items-center justify-center opacity-40">
                             <span class="text-slate-600">Project #${i}</span>
