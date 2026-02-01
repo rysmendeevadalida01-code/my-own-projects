@@ -43,11 +43,7 @@
                 </div>
                 <div class="p-6">
                     <h3 class="text-lg font-bold mb-2 text-indigo-300">Детекция границ (Gradients)</h3>
-                    <p class="text-sm text-slate-400 mb-4">Поиск контуров объектов через операторы Sobel и Laplacian. Анализ резких перепадов яркости.</p>
-                    <div class="text-[10px] space-y-1 text-slate-500">
-                        <p>• <span class="text-indigo-400 font-bold">Sobel X/Y:</span> выделение вертикальных и горизонтальных ребер.</p>
-                        <p>• <span class="text-indigo-400 font-bold">Laplacian:</span> комплексный поиск всех границ.</p>
-                    </div>
+                    <p class="text-sm text-slate-400 mb-4">Поиск контуров объектов через операторы Sobel и Laplacian.</p>
                 </div>
             </div>
 
@@ -59,10 +55,7 @@
                 </div>
                 <div class="p-6">
                     <h3 class="text-lg font-bold mb-2 text-indigo-300">Детектор Canny</h3>
-                    <p class="text-sm text-slate-400 mb-4">Многоступенчатый алгоритм для получения тонких и точных контуров без лишнего шума.</p>
-                    <div class="text-[10px] space-y-1 text-slate-500">
-                        <p>• <span class="text-indigo-400 font-bold">Цель:</span> подавление шума и выделение максимально четких линий.</p>
-                    </div>
+                    <p class="text-sm text-slate-400">Алгоритм для получения точных контуров без лишнего шума.</p>
                 </div>
             </div>
 
@@ -73,34 +66,42 @@
                     </video>
                 </div>
                 <div class="p-6">
-                    <h3 class="text-lg font-bold mb-2 text-indigo-300">Применение методов бинаризации</h3>
-                    <p class="text-sm text-slate-400 mb-4 italic">Binarization Methods: Simple, Adaptive, and Otsu Thresholding.</p>
-                    <div class="text-[10px] space-y-1 text-slate-500">
-                        <p>• <span class="text-indigo-400 font-bold">Purpose:</span> Преобразование в Ч/Б формат для изоляции объектов.</p>
-                        <p>• <span class="text-indigo-400 font-bold">Benefit:</span> Удаление теней и подготовка маски к анализу.</p>
-                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-indigo-300">Бинаризация</h3>
+                    <p class="text-sm text-slate-400">Преобразование в Ч/Б формат с использованием порогов Simple и Otsu.</p>
                 </div>
             </div>
 
-            <div class="bg-slate-800/50 border border-indigo-500/50 rounded-2xl overflow-hidden glow-card">
+            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden glow-card">
                 <div class="h-48 bg-slate-900">
                     <video controls class="w-full h-full object-cover">
                         <source src="project5.mp4" type="video/mp4">
                     </video>
                 </div>
                 <div class="p-6">
-                    <h3 class="text-lg font-bold mb-2 text-indigo-300">Морфология бинарных изображений</h3>
-                    <p class="text-sm text-slate-400 mb-4">Применение операций Open и Close для очистки маски от шума и заполнения внутренних пустот.</p>
-                    <div class="text-[10px] space-y-1 text-slate-500">
-                        <p>• <span class="text-indigo-400 font-bold">Объяснение:</span> Open удаляет мелкий шум, Close закрывает дыры внутри объекта.</p>
-                        <p>• <span class="text-indigo-400 font-bold">Отчёт:</span> Анализ изменений структуры после применения структурного элемента 3x3.</p>
+                    <h3 class="text-lg font-bold mb-2 text-indigo-300">Морфология</h3>
+                    <p class="text-sm text-slate-400">Очистка масок: Open (удаление шума) и Close (заполнение пустот).</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-800/50 border border-indigo-500/50 rounded-2xl overflow-hidden glow-card">
+                <div class="h-48 bg-slate-900">
+                    <video controls class="w-full h-full object-cover">
+                        <source src="project6.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold mb-2 text-indigo-300">Детекция и подсчет объектов</h3>
+                    <p class="text-sm text-slate-400 mb-4">Автоматическое выделение объектов рамками (Bounding Box) и фильтрация по площади контура.</p>
+                    <div class="text-[10px] space-y-1 text-slate-500 border-t border-slate-700 pt-3">
+                        <p>• <span class="text-indigo-400 font-bold">Применение:</span> Подсчет пассажиров в автобусах, анализ трафика в Бишкеке, инвентаризация на складах.</p>
+                        <p>• <span class="text-indigo-400 font-bold">Технологии:</span> findContours, boundingRect, фильтрация шума через Area Threshold.</p>
                     </div>
                 </div>
             </div>
 
             <script>
-                // Цикл теперь начинается с 6, так как 1-5 проекты добавлены вручную
-                for(let i=6; i<=24; i++) {
+                // Цикл теперь начинается с 7, так как 1-6 проекты добавлены вручную
+                for(let i=7; i<=24; i++) {
                     document.write(`
                         <div class="bg-slate-800/20 border border-slate-800 rounded-2xl h-72 flex items-center justify-center opacity-40">
                             <span class="text-slate-600">Project #${i}</span>
