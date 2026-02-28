@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dalida CV Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap');
+        body { font-family: 'Space Grotesk', sans-serif; background: #0f172a; color: #f8fafc; }
+        .glow-card:hover { transform: translateY(-10px); box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); transition: all 0.4s ease; }
+        .gradient-text { background: linear-gradient(90deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body class="selection:bg-indigo-500 selection:text-white">
+
+    <header class="py-12 px-6 text-center border-b border-slate-800 bg-slate-900/50">
+        <h1 class="text-4xl md:text-6xl font-bold mb-4 gradient-text">Рысмендеева Далида</h1>
+        <p class="text-xl text-indigo-300 font-light tracking-widest">24 ШГ • 10 КЛАСС • CV DEVELOPER</p>
+    </header>
+
+    <main class="container mx-auto px-6 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden glow-card">
+                <div class="h-48 bg-slate-900">
+                    <video controls class="w-full h-full object-cover">
+                        <source src="project1.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold mb-2 text-indigo-300">Шум и Фильтры</h3>
+                    <p class="text-sm text-slate-400">Очистка изображений от шумов с использованием Blur, Gaussian и Median фильтров.</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden glow-card">
+                <div class="h-48 bg-slate-900">
+                    <video controls class="w-full h-full object-cover">
+                        <source src="project2.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold mb-2 text-indigo-300">Детекция границ (Gradients)</h3>
+                    <p class="text-sm text-slate-400 mb-4">Поиск контуров объектов через операторы Sobel и Laplacian.</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden glow-card">
+                <div class="h-48 bg-slate-900">
+                    <video controls class="w-full h-full object-cover">
+                        <source src="project3.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold mb-2 text-indigo-300">Детектор Canny</h3>
+                    <p class="text-sm text-slate-400">Алгоритм для получения точных контуров без лишнего шума.</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden glow-card">
+                <div class="h-48 bg-slate-900">
+                    <video controls class="w-full h-full object-cover">
+                        <source src="project4.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold mb-2 text-indigo-300">Бинаризация</h3>
+                    <p class="text-sm text-slate-400">Преобразование в Ч/Б формат с использованием порогов Simple и Otsu.</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden glow-card">
+                <div class="h-48 bg-slate-900">
+                    <video controls class="w-full h-full object-cover">
+                        <source src="project5.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold mb-2 text-indigo-300">Морфология</h3>
+                    <p class="text-sm text-slate-400">Очистка масок: Open (удаление шума) и Close (заполнение пустот).</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-800/50 border border-indigo-500/50 rounded-2xl overflow-hidden glow-card">
+                <div class="h-48 bg-slate-900">
+                    <video controls class="w-full h-full object-cover">
+                        <source src="project6.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold mb-2 text-indigo-300">Детекция и подсчет объектов</h3>
+                    <p class="text-sm text-slate-400 mb-4">Автоматическое выделение объектов рамками (Bounding Box) и фильтрация по площади контура.</p>
+                    <div class="text-[10px] space-y-1 text-slate-500 border-t border-slate-700 pt-3">
+                        <p>• <span class="text-indigo-400 font-bold">Применение:</span> Подсчет пассажиров в автобусах, анализ трафика в Бишкеке, инвентаризация на складах.</p>
+                        <p>• <span class="text-indigo-400 font-bold">Технологии:</span> findContours, boundingRect, фильтрация шума через Area Threshold.</p>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                // Цикл теперь начинается с 7, так как 1-6 проекты добавлены вручную
+                for(let i=7; i<=24; i++) {
+                    document.write(`
+                        <div class="bg-slate-800/20 border border-slate-800 rounded-2xl h-72 flex items-center justify-center opacity-40">
+                            <span class="text-slate-600">Project #${i}</span>
+                        </div>
+                    `);
+                }
+            </script>
+        </div>
+    </main>
+
+    <footer class="text-center py-10 text-slate-600 text-xs border-t border-slate-900">
+        <p>rysmendeevadalida01@gmail.com • 2026</p>
+    </footer>
+
+</body>
+</html>
