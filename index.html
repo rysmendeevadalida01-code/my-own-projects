@@ -24,26 +24,32 @@
     <main class="container mx-auto px-6 py-16">
         <h2 class="text-2xl font-bold mb-8 text-slate-400 uppercase tracking-tighter">Computer Vision Projects</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
-            <script>
-                const projectTitles = [
-                    "Шум и Фильтры", "Детекция границ", "Детектор Canny", 
-                    "Бинаризация", "Морфология", "Детекция и подсчет"
-                ];
-                projectTitles.forEach((title, i) => {
-                    document.write(`
-                        <div class="bg-slate-800/50 rounded-2xl overflow-hidden glow-card">
-                            <div class="h-48 bg-slate-900">
-                                <video controls class="w-full h-full object-cover">
-                                    <source src="project${i+1}.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="text-lg font-bold text-indigo-300">${title}</h3>
-                            </div>
-                        </div>
-                    `);
-                });
-            </script>
+            
+            <div class="bg-slate-800/50 rounded-2xl overflow-hidden glow-card">
+                <div class="h-48 bg-slate-900"><video controls class="w-full h-full object-cover"><source src="project1.mp4" type="video/mp4"></video></div>
+                <div class="p-6"><h3 class="text-lg font-bold text-indigo-300">Шум и Фильтры</h3></div>
+            </div>
+            <div class="bg-slate-800/50 rounded-2xl overflow-hidden glow-card">
+                <div class="h-48 bg-slate-900"><video controls class="w-full h-full object-cover"><source src="project2.mp4" type="video/mp4"></video></div>
+                <div class="p-6"><h3 class="text-lg font-bold text-indigo-300">Детекция границ</h3></div>
+            </div>
+            <div class="bg-slate-800/50 rounded-2xl overflow-hidden glow-card">
+                <div class="h-48 bg-slate-900"><video controls class="w-full h-full object-cover"><source src="project3.mp4" type="video/mp4"></video></div>
+                <div class="p-6"><h3 class="text-lg font-bold text-indigo-300">Детектор Canny</h3></div>
+            </div>
+            <div class="bg-slate-800/50 rounded-2xl overflow-hidden glow-card">
+                <div class="h-48 bg-slate-900"><video controls class="w-full h-full object-cover"><source src="project4.mp4" type="video/mp4"></video></div>
+                <div class="p-6"><h3 class="text-lg font-bold text-indigo-300">Бинаризация</h3></div>
+            </div>
+            <div class="bg-slate-800/50 rounded-2xl overflow-hidden glow-card">
+                <div class="h-48 bg-slate-900"><video controls class="w-full h-full object-cover"><source src="project5.mp4" type="video/mp4"></video></div>
+                <div class="p-6"><h3 class="text-lg font-bold text-indigo-300">Морфология</h3></div>
+            </div>
+            <div class="bg-slate-800/50 rounded-2xl overflow-hidden glow-card">
+                <div class="h-48 bg-slate-900"><video controls class="w-full h-full object-cover"><source src="project6.mp4" type="video/mp4"></video></div>
+                <div class="p-6"><h3 class="text-lg font-bold text-indigo-300">Детекция и подсчет</h3></div>
+            </div>
+
         </div>
 
         <section class="max-w-3xl mx-auto bg-slate-800/30 border border-indigo-500/20 rounded-3xl p-8 shadow-2xl">
@@ -53,25 +59,17 @@
             </div>
 
             <div class="space-y-4">
-                <div>
-                    <label class="block text-[10px] uppercase text-indigo-400 mb-1 ml-1">HF Access Token</label>
-                    <input type="password" id="hfToken" 
-                        class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm outline-none focus:border-indigo-500 transition-all"
-                        placeholder="Вставьте ваш токен сюда...">
-                </div>
+                <textarea id="aiInput" rows="5" 
+                    class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-4 text-sm outline-none focus:border-indigo-500 transition-all"
+                    placeholder="Вставьте английский текст для анализа..."></textarea>
 
-                <div>
-                    <label class="block text-[10px] uppercase text-indigo-400 mb-1 ml-1">English Text to Analyze</label>
-                    <textarea id="aiInput" rows="5" 
-                        class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-4 text-sm outline-none focus:border-indigo-500 transition-all"
-                        placeholder="Вставьте английский текст..."></textarea>
-                </div>
-
-                <button id="runBtn" class="w-full bg-indigo-600 hover:bg-indigo-500 py-4 rounded-xl font-bold transition-all transform active:scale-95 flex items-center justify-center gap-2">
-                    <i class="fas fa-microchip"></i> АНАЛИЗИРОВАТЬ
+                <button id="runBtn" class="w-full bg-indigo-600 hover:bg-indigo-500 py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                    <i class="fas fa-search"></i> ПРОВЕРИТЬ ТЕКСТ
                 </button>
 
-                <div id="loading" class="hidden text-center text-indigo-400 text-sm animate-pulse">Модель просыпается, это займет до 20 секунд...</div>
+                <div id="loading" class="hidden text-center text-indigo-400 text-sm animate-pulse italic">
+                    Модель анализирует данные... Это может занять до 30 секунд.
+                </div>
 
                 <div id="results" class="hidden space-y-4 pt-6 border-t border-slate-700">
                     <div class="grid grid-cols-2 gap-4">
@@ -84,62 +82,63 @@
                             <p id="humanScore" class="text-2xl font-bold text-emerald-500">0%</p>
                         </div>
                     </div>
-                    <div id="finalVerdict" class="text-center p-3 bg-indigo-500/10 rounded-lg text-indigo-200 text-xs italic border border-indigo-500/20"></div>
                 </div>
             </div>
         </section>
     </main>
 
     <script>
+        // ЗАМЕНИ ТЕКСТ НИЖЕ НА СВОЙ НОВЫЙ ТОКЕН
+        const TOKEN = "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"; 
         const API_URL = "https://api-inference.huggingface.co/models/openai-community/roberta-base-openai-detector";
 
-        async function query(token, text) {
-            const response = await fetch(API_URL, {
-                headers: { 
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                },
-                method: "POST",
-                body: JSON.stringify({ inputs: text }),
-            });
-            return await response.json();
-        }
+        const btn = document.getElementById('runBtn');
+        const loading = document.getElementById('loading');
+        const results = document.getElementById('results');
 
-        document.getElementById('runBtn').addEventListener('click', async () => {
-            const token = document.getElementById('hfToken').value.trim();
+        btn.addEventListener('click', async () => {
             const text = document.getElementById('aiInput').value.trim();
-            
-            if (!token) return alert("Пожалуйста, введите токен!");
-            if (text.length < 15) return alert("Текст слишком короткий!");
+            if (text.length < 10) return alert("Введите текст!");
 
-            const loading = document.getElementById('loading');
-            const results = document.getElementById('results');
+            btn.disabled = true;
             loading.classList.remove('hidden');
             results.classList.add('hidden');
 
             try {
-                let data = await query(token, text);
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${TOKEN}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ inputs: text })
+                });
 
-                // Если модель прогревается
-                if (data.error && data.estimated_time) {
-                    await new Promise(r => setTimeout(r, 15000));
-                    data = await query(token, text);
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || "Ошибка сервера");
                 }
 
-                if (data.error) throw new Error(data.error);
+                // Если модель загружается
+                if (data.error && data.estimated_time) {
+                    alert("Модель просыпается. Попробуйте еще раз через 20 секунд.");
+                    return;
+                }
 
                 const res = data[0];
                 const fake = res.find(i => i.label === 'Fake' || i.label === 'LABEL_1').score;
                 const real = res.find(i => i.label === 'Real' || i.label === 'LABEL_0').score;
 
-                document.getElementById('aiScore').innerText = (fake * 100).toFixed(1) + "%";
-                document.getElementById('humanScore').innerText = (real * 100).toFixed(1) + "%";
-                document.getElementById('finalVerdict').innerText = fake > 0.5 ? "Вердикт: Вероятно, сгенерировано ИИ" : "Вердикт: Похоже на текст человека";
-                
+                document.getElementById('aiScore').innerText = Math.round(fake * 100) + "%";
+                document.getElementById('humanScore').innerText = Math.round(real * 100) + "%";
                 results.classList.remove('hidden');
+
             } catch (err) {
-                alert("Ошибка: " + err.message + "\nУбедитесь, что токен верный и модель доступна.");
+                console.error(err);
+                alert("К сожалению, произошла ошибка: " + err.message);
             } finally {
+                btn.disabled = false;
                 loading.classList.add('hidden');
             }
         });
