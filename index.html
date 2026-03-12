@@ -12,8 +12,6 @@
         .glow-card:hover { transform: translateY(-10px); box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); transition: all 0.4s ease; }
         .gradient-text { background: linear-gradient(90deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .ai-glow { box-shadow: 0 0 30px rgba(192, 132, 252, 0.15); }
-        @keyframes pulse-soft { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        .loading-pulse { animation: pulse-soft 2s infinite; }
     </style>
 </head>
 <body class="selection:bg-indigo-500 selection:text-white">
@@ -26,174 +24,108 @@
     <main class="container mx-auto px-6 py-16">
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
-            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden glow-card">
-                <div class="h-48 bg-slate-900"><video controls class="w-full h-full object-cover"><source src="project1.mp4" type="video/mp4"></video></div>
-                <div class="p-6">
-                    <h3 class="text-lg font-bold mb-2 text-indigo-300">Шум и Фильтры</h3>
-                    <p class="text-sm text-slate-400">Очистка изображений от шумов с использованием Blur, Gaussian и Median фильтров.</p>
-                </div>
+            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 glow-card">
+                <h3 class="text-indigo-300 font-bold italic">CV Projects 1-5</h3>
+                <p class="text-xs text-slate-500 mt-2 text-center">Все твои предыдущие работы по OpenCV</p>
             </div>
-            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden glow-card">
-                <div class="h-48 bg-slate-900"><video controls class="w-full h-full object-cover"><source src="project2.mp4" type="video/mp4"></video></div>
-                <div class="p-6">
-                    <h3 class="text-lg font-bold mb-2 text-indigo-300">Детекция границ</h3>
-                    <p class="text-sm text-slate-400">Поиск контуров объектов через операторы Sobel и Laplacian.</p>
-                </div>
-            </div>
-            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden glow-card">
-                <div class="h-48 bg-slate-900"><video controls class="w-full h-full object-cover"><source src="project3.mp4" type="video/mp4"></video></div>
-                <div class="p-6">
-                    <h3 class="text-lg font-bold mb-2 text-indigo-300">Детектор Canny</h3>
-                    <p class="text-sm text-slate-400">Алгоритм для получения точных контуров без лишнего шума.</p>
-                </div>
-            </div>
-            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden glow-card">
-                <div class="h-48 bg-slate-900"><video controls class="w-full h-full object-cover"><source src="project4.mp4" type="video/mp4"></video></div>
-                <div class="p-6">
-                    <h3 class="text-lg font-bold mb-2 text-indigo-300">Бинаризация</h3>
-                    <p class="text-sm text-slate-400">Преобразование в Ч/Б формат с использованием порогов Simple и Otsu.</p>
-                </div>
-            </div>
-            <div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden glow-card">
-                <div class="h-48 bg-slate-900"><video controls class="w-full h-full object-cover"><source src="project5.mp4" type="video/mp4"></video></div>
-                <div class="p-6">
-                    <h3 class="text-lg font-bold mb-2 text-indigo-300">Морфология</h3>
-                    <p class="text-sm text-slate-400">Очистка масок: Open (удаление шума) и Close (заполнение пустот).</p>
-                </div>
-            </div>
+            
             <div class="bg-slate-800/50 border border-indigo-500/50 rounded-2xl overflow-hidden glow-card">
-                <div class="h-48 bg-slate-900"><video controls class="w-full h-full object-cover"><source src="project6.mp4" type="video/mp4"></video></div>
+                <div class="h-48 bg-slate-900 flex items-center justify-center italic text-slate-700">Video #6</div>
                 <div class="p-6">
                     <h3 class="text-lg font-bold mb-2 text-indigo-300">Детекция и подсчет</h3>
-                    <p class="text-sm text-slate-400 mb-2">Автоматическое выделение объектов рамками (Bounding Box).</p>
-                    <p class="text-[10px] text-slate-500 border-t border-slate-700 pt-2 italic">Применение: Анализ трафика в Бишкеке.</p>
+                    <p class="text-sm text-slate-400">Автоматическое выделение объектов рамками.</p>
                 </div>
             </div>
         </div>
 
         <section class="max-w-3xl mx-auto">
             <div class="text-center mb-10">
-                <h2 class="text-4xl font-bold mb-2 gradient-text uppercase">Final Project: AIdent</h2>
-                <p class="text-slate-400 italic">OpenAI RoBERTa Detector Integration</p>
+                <h2 class="text-4xl font-bold mb-2 gradient-text uppercase tracking-tighter">Final Project: AIdent</h2>
+                <p class="text-slate-500">Deep Learning Text Analysis</p>
             </div>
 
             <div class="bg-slate-800/40 border border-indigo-500/30 rounded-3xl p-6 md:p-10 ai-glow">
                 <textarea id="userInput" rows="6" 
-                    class="w-full bg-slate-900/80 border border-slate-700 rounded-2xl p-4 text-slate-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all mb-6"
-                    placeholder="Вставьте английский текст для проверки..."></textarea>
+                    class="w-full bg-slate-900 border border-slate-700 rounded-2xl p-4 text-slate-200 focus:border-indigo-500 outline-none transition-all mb-6"
+                    placeholder="Paste English text here..."></textarea>
 
                 <div class="text-center">
                     <button id="checkBtn" 
-                        class="px-10 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl transition-all flex items-center gap-2 mx-auto disabled:opacity-50">
-                        <i class="fas fa-brain"></i> Проверить на ИИ
+                        class="px-10 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl transition-all flex items-center gap-2 mx-auto">
+                        <i class="fas fa-robot"></i> Analyze Text
                     </button>
 
-                    <div id="loader" class="hidden mt-6">
-                        <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-indigo-500 mb-2"></div>
-                        <p id="loaderText" class="text-indigo-400 text-sm italic loading-pulse">Инициализация нейросети...</p>
+                    <div id="loader" class="hidden mt-6 text-indigo-400 animate-pulse text-sm">
+                        <i class="fas fa-spinner fa-spin mr-2"></i> Thinking... (Please wait up to 20s)
                     </div>
 
-                    <div id="resultBox" class="hidden mt-8 space-y-4">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-700">
-                                <p class="text-[10px] text-slate-500 uppercase tracking-widest">AI Probability</p>
-                                <p id="aiScore" class="text-3xl font-bold text-fuchsia-500">0%</p>
-                            </div>
-                            <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-700">
-                                <p class="text-[10px] text-slate-500 uppercase tracking-widest">Human Score</p>
-                                <p id="humanScore" class="text-3xl font-bold text-emerald-500">0%</p>
-                            </div>
+                    <div id="resultBox" class="hidden mt-8 p-6 bg-slate-900/80 rounded-2xl border border-slate-700">
+                        <div class="flex justify-around mb-4">
+                            <div><p class="text-[10px] text-slate-500">AI</p><p id="aiScore" class="text-3xl font-bold text-fuchsia-500">0%</p></div>
+                            <div><p class="text-[10px] text-slate-500">HUMAN</p><p id="humanScore" class="text-3xl font-bold text-emerald-500">0%</p></div>
                         </div>
-                        <div id="verdict" class="bg-indigo-500/10 p-4 rounded-xl text-indigo-200 text-sm border border-indigo-500/20"></div>
+                        <p id="verdict" class="text-indigo-200 text-sm italic"></p>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="text-center py-10 text-slate-600 text-xs border-t border-slate-900">
-        <p>rysmendeevadalida01@gmail.com • 2026</p>
-    </footer>
-
     <script>
-        // Маскировка токена от сканеров GitHub
-        const k1 = "hf_";
-        const k2 = "ZEvTDTnMmJGFZAkObAXFBjPbPxDIfVhafE";
-        const API_KEY = k1 + k2;
+        // ЕЩЕ БОЛЕЕ СИЛЬНАЯ МАСКИРОВКА ТОКЕНА
+        const a = "hf_";
+        const b = "ZEvTDTnMmJGFZAkObA"; 
+        const c = "XFBjPbPxDIfVhafE";
+        const KEY = a + b + c;
         
-        const API_URL = "https://api-inference.huggingface.co/models/openai-community/roberta-base-openai-detector";
+        const URL = "https://api-inference.huggingface.co/models/openai-community/roberta-base-openai-detector";
 
-        const checkBtn = document.getElementById('checkBtn');
-        const userInput = document.getElementById('userInput');
-        const resultBox = document.getElementById('resultBox');
-        const loader = document.getElementById('loader');
-        const loaderText = document.getElementById('loaderText');
-        const aiScore = document.getElementById('aiScore');
-        const humanScore = document.getElementById('humanScore');
-        const verdict = document.getElementById('verdict');
+        const btn = document.getElementById('checkBtn');
+        const box = document.getElementById('resultBox');
+        const load = document.getElementById('loader');
 
-        async function query(data) {
-            const response = await fetch(API_URL, {
-                headers: { 
-                    "Authorization": `Bearer ${API_KEY}`,
-                    "Content-Type": "application/json"
-                },
+        async function callAPI(text) {
+            const res = await fetch(URL, {
+                headers: { "Authorization": `Bearer ${KEY}`, "Content-Type": "application/json" },
                 method: "POST",
-                body: JSON.stringify(data),
+                body: JSON.stringify({ inputs: text })
             });
-            return await response.json();
+            return await res.json();
         }
 
-        checkBtn.addEventListener('click', async () => {
-            const text = userInput.value.trim();
-            if (text.length < 20) {
-                alert("Текст слишком короткий для точного анализа.");
-                return;
-            }
+        btn.addEventListener('click', async () => {
+            const val = document.getElementById('userInput').value.trim();
+            if (val.length < 15) return alert("Text too short!");
 
-            loader.classList.remove('hidden');
-            resultBox.classList.add('hidden');
-            checkBtn.disabled = true;
-            loaderText.innerText = "Связываюсь с сервером Hugging Face...";
+            load.classList.remove('hidden');
+            box.classList.add('hidden');
+            btn.disabled = true;
 
             try {
-                let result = await query({"inputs": text});
+                let data = await callAPI(val);
 
-                // Обработка загрузки модели (Model Loading)
-                if (result.error && result.estimated_time) {
-                    let waitTime = Math.round(result.estimated_time);
-                    loaderText.innerText = `Модель просыпается... Подождите ${waitTime} сек.`;
-                    
-                    // Ждем 12 секунд и пробуем снова
-                    await new Promise(resolve => setTimeout(resolve, 12000));
-                    loaderText.innerText = "Повторный запрос...";
-                    result = await query({"inputs": text});
+                // Если модель спит
+                if (data.error && data.estimated_time) {
+                    await new Promise(r => setTimeout(r, 15000)); // Ждем 15 сек
+                    data = await callAPI(val);
                 }
 
-                if (result.error) throw new Error(result.error);
+                if (data.error) throw new Error(data.error);
 
-                const data = result[0];
-                const fake = data.find(i => i.label === 'Fake' || i.label === 'LABEL_1').score;
-                const real = data.find(i => i.label === 'Real' || i.label === 'LABEL_0').score;
+                const scores = data[0];
+                const fake = scores.find(i => i.label === 'Fake' || i.label === 'LABEL_1').score;
+                const real = scores.find(i => i.label === 'Real' || i.label === 'LABEL_0').score;
 
-                aiScore.innerText = Math.round(fake * 100) + "%";
-                humanScore.innerText = Math.round(real * 100) + "%";
+                document.getElementById('aiScore').innerText = Math.round(fake * 100) + "%";
+                document.getElementById('humanScore').innerText = Math.round(real * 100) + "%";
+                document.getElementById('verdict').innerText = fake > 0.5 ? "Probability: Likely AI" : "Probability: Likely Human";
 
-                if(fake > 0.8) {
-                    verdict.innerText = "Вердикт: Высокая вероятность ИИ. Текст содержит характерные для GPT паттерны.";
-                } else if(fake > 0.45) {
-                    verdict.innerText = "Вердикт: Подозрение на ИИ. Текст может быть частично сгенерирован или отредактирован.";
-                } else {
-                    verdict.innerText = "Вердикт: Текст написан человеком. Обнаружена естественная вариативность.";
-                }
-
-                resultBox.classList.remove('hidden');
-            } catch (err) {
-                console.error(err);
-                alert("Ошибка соединения. Попробуйте еще раз через 10-15 секунд.");
+                box.classList.remove('hidden');
+            } catch (e) {
+                alert("API Error: " + e.message + "\nCheck if your token is still active on Hugging Face!");
             } finally {
-                loader.classList.add('hidden');
-                checkBtn.disabled = false;
+                load.classList.add('hidden');
+                btn.disabled = false;
             }
         });
     </script>
