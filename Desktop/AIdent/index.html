@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AIdent Portfolio</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+}
+
+.glow-card:hover{
+transform:translateY(-8px);
+box-shadow:0 0 20px rgba(99,102,241,0.5);
+transition:0.3s;
+}
+
+.gradient-text{
+background:linear-gradient(90deg,#818cf8,#c084fc);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header class="text-center py-12 border-b border-slate-700">
+
+<h1 class="text-5xl font-bold gradient-text">
+Рысмендеева Далида
+</h1>
+
+<p class="text-indigo-300 mt-4 text-lg">
+24 ШГ • 10 класс • CV Developer
+</p>
+
+</header>
+
+
+
+<!-- AIDENT -->
+
+<section class="max-w-3xl mx-auto mt-16 p-8 bg-slate-800 rounded-xl">
+
+<h2 class="text-2xl font-bold text-indigo-300 mb-4 text-center">
+AIdent — Проверка текста на ИИ
+</h2>
+
+<textarea
+id="userInput"
+rows="6"
+placeholder="Вставьте текст для проверки..."
+class="w-full p-4 rounded bg-slate-900 border border-slate-700"
+></textarea>
+
+<button
+id="checkBtn"
+class="w-full mt-4 bg-indigo-600 p-3 rounded hover:bg-indigo-500">
+Проверить
+</button>
+
+<div id="result" class="mt-4 text-center text-slate-300">
+Результат появится здесь
+</div>
+
+</section>
+
+
+
+<!-- PROJECTS -->
+
+<main class="container mx-auto px-6 py-16">
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+<!-- PROJECT 1 -->
+
+<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
+
+<video controls class="w-full h-48 object-cover">
+<source src="project1.mp4" type="video/mp4">
+</video>
+
+<div class="p-4">
+
+<h3 class="text-indigo-300 font-bold">
+Шум и фильтры
+</h3>
+
+<p class="text-sm text-slate-400">
+Очистка изображений с помощью Blur, Gaussian и Median фильтров.
+</p>
+
+</div>
+
+</div>
+
+
+
+<!-- PROJECT 2 -->
+
+<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
+
+<video controls class="w-full h-48 object-cover">
+<source src="project2.mp4" type="video/mp4">
+</video>
+
+<div class="p-4">
+
+<h3 class="text-indigo-300 font-bold">
+Детекция границ
+</h3>
+
+<p class="text-sm text-slate-400">
+Использование операторов Sobel и Laplacian.
+</p>
+
+</div>
+
+</div>
+
+
+
+<!-- PROJECT 3 -->
+
+<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
+
+<video controls class="w-full h-48 object-cover">
+<source src="project3.mp4" type="video/mp4">
+</video>
+
+<div class="p-4">
+
+<h3 class="text-indigo-300 font-bold">
+Детектор Canny
+</h3>
+
+<p class="text-sm text-slate-400">
+Получение точных контуров объектов.
+</p>
+
+</div>
+
+</div>
+
+
+
+<!-- PROJECT 4 -->
+
+<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
+
+<video controls class="w-full h-48 object-cover">
+<source src="project4.mp4" type="video/mp4">
+</video>
+
+<div class="p-4">
+
+<h3 class="text-indigo-300 font-bold">
+Бинаризация
+</h3>
+
+<p class="text-sm text-slate-400">
+Пороговые методы Simple и Otsu.
+</p>
+
+</div>
+
+</div>
+
+
+
+<!-- PROJECT 5 -->
+
+<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
+
+<video controls class="w-full h-48 object-cover">
+<source src="project5.mp4" type="video/mp4">
+</video>
+
+<div class="p-4">
+
+<h3 class="text-indigo-300 font-bold">
+Морфология
+</h3>
+
+<p class="text-sm text-slate-400">
+Open и Close операции для очистки масок.
+</p>
+
+</div>
+
+</div>
+
+
+
+<!-- PROJECT 6 -->
+
+<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
+
+<video controls class="w-full h-48 object-cover">
+<source src="project6.mp4" type="video/mp4">
+</video>
+
+<div class="p-4">
+
+<h3 class="text-indigo-300 font-bold">
+Детекция и подсчет объектов
+</h3>
+
+<p class="text-sm text-slate-400">
+Bounding Box и фильтрация контуров по площади.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+
+
+<!-- FOOTER -->
+
+<footer class="text-center py-10 border-t border-slate-800 text-slate-400 text-sm">
+
+<p>
+© 2026 год • Все права защищены
+</p>
+
+<p class="mt-2">
+Контакты: +996 554 306 190
+</p>
+
+<p>
+rysmendeevadalida01@gmail.com
+</p>
+
+</footer>
+
+
+
+<script>
+
+const API_URL="https://api-inference.huggingface.co/models/openai-community/roberta-base-openai-detector"
+
+const API_TOKEN="ВАШ_ТОКЕН"
+
+async function checkText(text){
+
+const response=await fetch(API_URL,{
+method:"POST",
+headers:{
+Authorization:`Bearer ${API_TOKEN}`,
+"Content-Type":"application/json"
+},
+body:JSON.stringify({inputs:text})
+})
+
+return await response.json()
+
+}
+
+document.getElementById("checkBtn").addEventListener("click",async()=>{
+
+const text=document.getElementById("userInput").value
+
+const result=document.getElementById("result")
+
+result.innerText="Анализирую..."
+
+const data=await checkText(text)
+
+const fake=data[0].find(x=>x.label==="Fake").score
+const real=data[0].find(x=>x.label==="Real").score
+
+result.innerHTML=`
+ИИ: ${(fake*100).toFixed(2)}% <br>
+Человек: ${(real*100).toFixed(2)}%
+`
+
+})
+
+</script>
+
+</body>
+</html>
