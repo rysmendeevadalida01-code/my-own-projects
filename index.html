@@ -1,117 +1,192 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dalida Portfolio | AIdent</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap');
-        body { font-family: 'Space Grotesk', sans-serif; background: #0f172a; color: #f8fafc; }
-        .glow-card:hover { transform: translateY(-5px); border-color: #6366f1; box-shadow: 0 0 15px rgba(99, 102, 241, 0.2); }
-        .gradient-text { background: linear-gradient(90deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIdent • Dalida CV Portfolio</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap');
+
+body{
+font-family:'Space Grotesk',sans-serif;
+background:#0f172a;
+color:#f8fafc;
+}
+
+.glow-card:hover{
+transform:translateY(-10px);
+box-shadow:0 0 20px rgba(99,102,241,0.4);
+transition:all .4s ease;
+}
+
+.gradient-text{
+background:linear-gradient(90deg,#818cf8,#c084fc);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+</style>
 </head>
-<body class="p-4 md:p-10">
 
-    <header class="text-center mb-16">
-        <h1 class="text-4xl font-bold gradient-text uppercase">Рысмендеева Далида</h1>
-        <p class="text-slate-500 tracking-tighter text-sm">PORTFOLIO & AI DETECTOR</p>
-    </header>
+<body class="selection:bg-indigo-500 selection:text-white">
 
-    <main class="max-w-6xl mx-auto">
-        <h2 class="text-xl font-bold mb-6 text-indigo-400 uppercase">Computer Vision Projects</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
-            <script>
-                const titles = ["Шум и Фильтры", "Детекция границ", "Детектор Canny", "Бинаризация", "Морфология", "Детекция и подсчет"];
-                titles.forEach((t, i) => {
-                    document.write(`
-                        <div class="bg-slate-800/40 border border-slate-700 rounded-2xl overflow-hidden glow-card transition-all">
-                            <div class="h-40 bg-slate-900 flex items-center justify-center">
-                                <video controls class="w-full h-full object-cover">
-                                    <source src="project${i+1}.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                            <div class="p-4"><h3 class="font-bold text-sm text-slate-200">${t}</h3></div>
-                        </div>
-                    `);
-                });
-            </script>
-        </div>
+<header class="py-12 px-6 text-center border-b border-slate-800 bg-slate-900/50">
+<h1 class="text-4xl md:text-6xl font-bold mb-4 gradient-text">AIdent</h1>
+<p class="text-xl text-indigo-300 font-light tracking-widest">
+ИИ детектор текста • roberta-base-openai-detector
+</p>
+</header>
 
-        <section class="max-w-2xl mx-auto bg-slate-800/20 border-2 border-indigo-500/20 rounded-3xl p-6 md:p-8">
-            <h2 class="text-3xl font-bold text-center mb-6 gradient-text uppercase">AIdent Tool</h2>
-            
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-[10px] text-indigo-400 mb-1">HF ACCESS TOKEN (PASTE ONCE)</label>
-                    <input type="password" id="hfToken" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs outline-none focus:border-indigo-500" placeholder="hf_...">
-                </div>
+<main class="container mx-auto px-6 py-16">
 
-                <textarea id="aiInput" rows="5" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-sm outline-none focus:border-indigo-500" placeholder="Paste English text for analysis..."></textarea>
-                
-                <button id="runBtn" class="w-full bg-indigo-600 hover:bg-indigo-500 py-4 rounded-xl font-bold transition-transform active:scale-95">ПРОВЕРИТЬ</button>
-                
-                <div id="loader" class="hidden text-center text-indigo-400 animate-pulse text-sm">Нейросеть просыпается... (до 20 сек)</div>
-                
-                <div id="results" class="hidden grid grid-cols-2 gap-4 mt-6">
-                    <div class="bg-slate-900 p-4 rounded-xl text-center border border-slate-800">
-                        <p class="text-[10px] text-slate-500 uppercase">AI Score</p>
-                        <p id="aiScore" class="text-2xl font-bold text-fuchsia-500">0%</p>
-                    </div>
-                    <div class="bg-slate-900 p-4 rounded-xl text-center border border-slate-800">
-                        <p class="text-[10px] text-slate-500 uppercase">Human Score</p>
-                        <p id="humanScore" class="text-2xl font-bold text-emerald-500">0%</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+<!-- AIDENT DETECTOR -->
+<div class="max-w-3xl mx-auto mb-20 bg-slate-800/50 border border-indigo-500/40 rounded-2xl p-8">
 
-    <script>
-        const API_URL = "https://api-inference.huggingface.co/models/openai-community/roberta-base-openai-detector";
-        
-        async function query(token, text) {
-            const response = await fetch(API_URL, {
-                headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" },
-                method: "POST",
-                body: JSON.stringify({ inputs: text }),
-            });
-            if (!response.ok) throw new Error("Token Invalid or Server Busy");
-            return await response.json();
-        }
+<h2 class="text-2xl font-bold mb-6 text-indigo-300 text-center">
+Проверка текста на ИИ
+</h2>
 
-        document.getElementById('runBtn').addEventListener('click', async () => {
-            const token = document.getElementById('hfToken').value.trim();
-            const text = document.getElementById('aiInput').value.trim();
-            
-            if (!token || !text) return alert("Fill all fields!");
+<textarea
+id="userInput"
+rows="6"
+placeholder="Вставьте текст для проверки..."
+class="w-full p-4 rounded-xl bg-slate-900 border border-slate-700 focus:border-indigo-500 outline-none"
+></textarea>
 
-            document.getElementById('loader').classList.remove('hidden');
-            document.getElementById('results').classList.add('hidden');
+<button
+id="checkBtn"
+class="mt-6 w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 transition font-bold">
+Проверить текст
+</button>
 
-            try {
-                let data = await query(token, text);
-                
-                // Обработка загрузки модели
-                if (data.error && data.estimated_time) {
-                    await new Promise(r => setTimeout(r, 15000));
-                    data = await query(token, text);
-                }
+<div id="result" class="mt-6 text-center text-slate-300">
+Результат появится здесь...
+</div>
 
-                const fake = data[0].find(i => i.label === 'Fake' || i.label === 'LABEL_1').score;
-                const real = data[0].find(i => i.label === 'Real' || i.label === 'LABEL_0').score;
+</div>
 
-                document.getElementById('aiScore').innerText = Math.round(fake * 100) + "%";
-                document.getElementById('humanScore').innerText = Math.round(real * 100) + "%";
-                document.getElementById('results').classList.remove('hidden');
-            } catch (e) {
-                alert("Error: " + e.message);
-            } finally {
-                document.getElementById('loader').classList.add('hidden');
-            }
-        });
-    </script>
+
+<!-- PROJECTS -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+<div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden glow-card">
+<div class="h-48 bg-slate-900">
+<video controls class="w-full h-full object-cover">
+<source src="project1.mp4" type="video/mp4">
+</video>
+</div>
+<div class="p-6">
+<h3 class="text-lg font-bold mb-2 text-indigo-300">Шум и Фильтры</h3>
+<p class="text-sm text-slate-400">
+Очистка изображений от шумов с использованием Blur, Gaussian и Median фильтров.
+</p>
+</div>
+</div>
+
+<div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden glow-card">
+<div class="h-48 bg-slate-900">
+<video controls class="w-full h-full object-cover">
+<source src="project2.mp4" type="video/mp4">
+</video>
+</div>
+<div class="p-6">
+<h3 class="text-lg font-bold mb-2 text-indigo-300">Детекция границ</h3>
+<p class="text-sm text-slate-400">
+Поиск контуров объектов через операторы Sobel и Laplacian.
+</p>
+</div>
+</div>
+
+</div>
+
+</main>
+
+<footer class="text-center py-10 text-slate-600 text-xs border-t border-slate-900">
+<p>rysmendeevadalida01@gmail.com • 2026</p>
+</footer>
+
+
+<script>
+
+const API_URL = "https://api-inference.huggingface.co/models/openai-community/roberta-base-openai-detector"
+const API_TOKEN = "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"
+
+async function checkText(text){
+
+const response = await fetch(API_URL,{
+method:"POST",
+headers:{
+"Authorization":`Bearer ${API_TOKEN}`,
+"Content-Type":"application/json"
+},
+body:JSON.stringify({inputs:text})
+})
+
+if(!response.ok){
+throw new Error("Ошибка запроса к модели")
+}
+
+return await response.json()
+}
+
+
+document.getElementById("checkBtn").addEventListener("click",async()=>{
+
+const text=document.getElementById("userInput").value
+const resultDiv=document.getElementById("result")
+
+if(text.length<20){
+resultDiv.innerHTML="Введите больше текста"
+return
+}
+
+resultDiv.innerHTML="Анализирую текст..."
+
+try{
+
+const data=await checkText(text)
+
+const fakeScore=data[0].find(x=>x.label==="Fake").score
+const realScore=data[0].find(x=>x.label==="Real").score
+
+let explanation=""
+
+if(fakeScore>0.7){
+explanation="Текст содержит паттерны генерации ИИ: повторяемость структуры и предсказуемость слов."
+}else if(fakeScore>0.4){
+explanation="Некоторые фразы похожи на генерацию ИИ, но уверенность модели средняя."
+}else{
+explanation="Текст выглядит как написанный человеком: больше вариативности и естественных конструкций."
+}
+
+resultDiv.innerHTML=`
+
+<div class="space-y-2">
+
+<p class="text-lg">🤖 ИИ: <b>${(fakeScore*100).toFixed(2)}%</b></p>
+
+<p class="text-lg">👤 Человек: <b>${(realScore*100).toFixed(2)}%</b></p>
+
+<p class="text-sm text-slate-400 mt-2">
+${explanation}
+</p>
+
+</div>
+
+`
+
+}catch(error){
+
+resultDiv.innerHTML="Ошибка: "+error.message
+
+}
+
+})
+
+</script>
+
 </body>
 </html>
