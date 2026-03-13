@@ -1,90 +1,160 @@
-<script type="module">
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIdent Portfolio — Далида</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2"></script> <!-- Transformers.js CDN -->
+<style>
+body{font-family:Arial;background:#0f172a;color:white;}
+.glow-card:hover{transform:translateY(-8px);box-shadow:0 0 20px rgba(99,102,241,0.5);transition:0.3s;}
+.gradient-text{background:linear-gradient(90deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+textarea{color:white;}
+#loading-model {color: #a5b4fc; font-style: italic;}
+</style>
+</head>
+<body>
+<header class="text-center py-12 border-b border-slate-700">
+<h1 class="text-5xl font-bold gradient-text">Рысмендеева Далида</h1>
+<p class="text-indigo-300 mt-4 text-lg">24 ШГ • 10 класс • CV Developer</p>
+</header>
 
-import { pipeline, env } from "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2";
+<section class="max-w-3xl mx-auto mt-16 p-8 bg-slate-800 rounded-xl">
+<h2 class="text-2xl font-bold text-indigo-300 mb-4 text-center">AIdent — Проверка текста на ИИ</h2>
+<p class="text-center text-indigo-400 mb-6">
+Распознаёт ИИ-текст от человеческого<br>
+(модель запускается прямо в браузере с помощью Transformers.js)
+</p>
 
-env.allowLocalModels = false;
+<textarea
+id="userInput"
+rows="6"
+placeholder="Вставьте текст для проверки..."
+class="w-full p-4 rounded bg-slate-900 border border-slate-700 resize-y"
+></textarea>
 
-let classifier;
+<button
+id="checkBtn"
+class="w-full mt-6 bg-indigo-600 hover:bg-indigo-500 p-4 rounded text-lg font-medium transition disabled:opacity-50"
+disabled
+>
+Проверить
+</button>
 
-const btn = document.getElementById("checkBtn");
-const result = document.getElementById("result");
+<div id="result" class="mt-6 text-center text-slate-300 min-h-[100px]">
+<span id="loading-model">Загружаю модель... (первый раз может занять 20–60 сек)</span>
+</div>
+</section>
 
-async function loadModel(){
+<main class="container mx-auto px-6 py-16">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-result.innerText="Загрузка нейросети..."
+<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
+<video controls class="w-full h-48 object-cover"><source src="project1.mp4" type="video/mp4"></video>
+<div class="p-4"><h3 class="text-indigo-300 font-bold">Шум и фильтры</h3><p class="text-sm text-slate-400">Очистка изображений с помощью Blur, Gaussian и Median фильтров.</p></div>
+</div>
 
-try{
+<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
+<video controls class="w-full h-48 object-cover"><source src="project2.mp4" type="video/mp4"></video>
+<div class="p-4"><h3 class="text-indigo-300 font-bold">Детекция границ</h3><p class="text-sm text-slate-400">Использование операторов Sobel и Laplacian.</p></div>
+</div>
 
-classifier = await pipeline(
-"sentiment-analysis",
-"Xenova/distilbert-base-uncased-finetuned-sst-2-english"
-);
+<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
+<video controls class="w-full h-48 object-cover"><source src="project3.mp4" type="video/mp4"></video>
+<div class="p-4"><h3 class="text-indigo-300 font-bold">Детектор Canny</h3><p class="text-sm text-slate-400">Получение точных контуров объектов.</p></div>
+</div>
 
-result.innerText="Модель загружена. Вставьте текст."
+<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
+<video controls class="w-full h-48 object-cover"><source src="project4.mp4" type="video/mp4"></video>
+<div class="p-4"><h3 class="text-indigo-300 font-bold">Бинаризация</h3><p class="text-sm text-slate-400">Пороговые методы Simple и Otsu.</p></div>
+</div>
 
-}catch(e){
+<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
+<video controls class="w-full h-48 object-cover"><source src="project5.mp4" type="video/mp4"></video>
+<div class="p-4"><h3 class="text-indigo-300 font-bold">Морфология</h3><p class="text-sm text-slate-400">Open и Close операции для очистки масок.</p></div>
+</div>
 
-result.innerText="Ошибка загрузки модели"
+<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
+<video controls class="w-full h-48 object-cover"><source src="project6.mp4" type="video/mp4"></video>
+<div class="p-4"><h3 class="text-indigo-300 font-bold">Детекция и подсчет объектов</h3><p class="text-sm text-slate-400">Bounding Box и фильтрация контуров по площади.</p></div>
+</div>
 
-console.error(e)
+</div>
+</main>
 
+<footer class="text-center py-10 border-t border-slate-800 text-slate-400 text-sm">
+<p>© 2026 год • Все права защищены</p>
+<p class="mt-2">Контакты: +996 554 306 190</p>
+<p>rysmendeevadalida01@gmail.com</p>
+</footer>
+
+<script>
+let classifier = null;
+
+async function loadModel() {
+    try {
+        const { pipeline } = Xenova;  // из CDN @xenova/transformers
+        classifier = await pipeline('text-classification', 'fakespot-ai/roberta-base-ai-text-detection-v1');
+        document.getElementById('loading-model').innerText = 'Модель готова! ✅';
+        document.getElementById('checkBtn').disabled = false;
+    } catch (err) {
+        console.error(err);
+        document.getElementById('loading-model').innerHTML = '<span class="text-red-400">Ошибка загрузки модели: ' + err.message + '</span><br>Попробуйте обновить страницу или использовать Chrome.';
+    }
 }
 
-}
+// Загружаем модель при открытии страницы
+loadModel();
 
-function estimateAI(text){
+document.getElementById('checkBtn').addEventListener('click', async () => {
+    const text = document.getElementById('userInput').value.trim();
+    const resultDiv = document.getElementById('result');
 
-let lengthScore = Math.min(text.length / 600, 1)
+    if (text.length < 30) {
+        resultDiv.innerHTML = '<span class="text-red-400">Введите минимум 30 символов!</span>';
+        return;
+    }
 
-let punctuation = (text.match(/[.,!?;]/g) || []).length
-let punctuationScore = punctuation / text.length * 80
+    if (!classifier) {
+        resultDiv.innerHTML = '<span class="text-yellow-400">Модель ещё загружается... Подождите.</span>';
+        return;
+    }
 
-let sentences = text.split(".").length
+    resultDiv.innerHTML = 'Анализирую... ⏳';
 
-let aiScore = (lengthScore*0.4 + punctuationScore*0.3 + sentences*0.3)
+    try {
+        const output = await classifier(text, { truncation: true, max_length: 512 });
 
-aiScore = Math.min(aiScore,0.95)
+        // output обычно массив с одним объектом
+        const top = output[0];
+        const label = top.label.toLowerCase();
+        const score = top.score;
 
-return aiScore
+        let aiPercent, humanPercent;
 
-}
+        if (label.includes('ai') || label.includes('fake') || label.includes('generated')) {
+            aiPercent = (score * 100).toFixed(1);
+            humanPercent = (100 - aiPercent).toFixed(1);
+        } else {
+            humanPercent = (score * 100).toFixed(1);
+            aiPercent = (100 - humanPercent).toFixed(1);
+        }
 
-btn.onclick = async ()=>{
-
-const text=document.getElementById("userInput").value.trim()
-
-if(text.length<30){
-
-alert("Введите более длинный текст")
-
-return
-
-}
-
-result.innerText="Анализ..."
-
-try{
-
-await classifier(text)
-
-const aiScore = estimateAI(text)
-const humanScore = 1 - aiScore
-
-result.innerHTML=`
-🤖 ИИ: ${(aiScore*100).toFixed(1)}% <br>
-👤 Человек: ${(humanScore*100).toFixed(1)}%
-`
-
-}catch(e){
-
-result.innerText="Ошибка анализа"
-
-console.error(e)
-
-}
-
-}
-
-loadModel()
-
+        resultDiv.innerHTML = `
+            <div class="text-2xl font-bold mt-4">
+                🤖 ИИ: <span class="text-red-400">${aiPercent}%</span><br>
+                👤 Человек: <span class="text-green-400">${humanPercent}%</span>
+            </div>
+            <div class="text-sm text-slate-500 mt-2">
+                (уверенность: ${Math.round(Math.max(aiPercent, humanPercent))}%)
+            </div>
+        `;
+    } catch (err) {
+        console.error(err);
+        resultDiv.innerHTML = '<span class="text-red-400">Ошибка анализа: ' + err.message + '</span>';
+    }
+});
 </script>
+</body>
+</html>
