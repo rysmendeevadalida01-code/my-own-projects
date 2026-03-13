@@ -1,127 +1,153 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AIdent Portfolio</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-body{font-family:Arial;background:#0f172a;color:white;}
-.glow-card:hover{transform:translateY(-8px);box-shadow:0 0 20px rgba(99,102,241,0.5);transition:0.3s;}
-.gradient-text{background:linear-gradient(90deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-textarea{color:white;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dalida Portfolio | AIdent AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap');
+        body { font-family: 'Space Grotesk', sans-serif; background: #0f172a; color: #f8fafc; scroll-behavior: smooth; }
+        .glow-card:hover { transform: translateY(-8px); box-shadow: 0 0 25px rgba(99, 102, 241, 0.4); transition: 0.3s; border-color: #6366f1; }
+        .gradient-text { background: linear-gradient(90deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .ai-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(99, 102, 241, 0.2); }
+    </style>
 </head>
 <body>
-<header class="text-center py-12 border-b border-slate-700">
-<h1 class="text-5xl font-bold gradient-text">Рысмендеева Далида</h1>
-<p class="text-indigo-300 mt-4 text-lg">24 ШГ • 10 класс • CV Developer</p>
-</header>
 
-<section class="max-w-3xl mx-auto mt-16 p-8 bg-slate-800 rounded-xl">
-<h2 class="text-2xl font-bold text-indigo-300 mb-4 text-center">AIdent — Проверка текста на ИИ</h2>
-<p class="text-center text-indigo-400 mb-6">Распознаёт ИИ-текст от человеческого (модель fakespot-ai/roberta-base-ai-text-detection-v1)</p>
+    <header class="py-16 px-6 text-center border-b border-slate-800 bg-slate-900/50">
+        <h1 class="text-5xl md:text-6xl font-bold mb-4 gradient-text tracking-tight">Рысмендеева Далида</h1>
+        <p class="text-xl text-indigo-300 font-light tracking-widest uppercase mb-6">24 ШГ • 10 КЛАСС • CV & AI DEVELOPER</p>
+        <div class="flex flex-col md:flex-row justify-center items-center gap-4 text-slate-400 text-sm">
+            <span><i class="fas fa-envelope mr-2"></i>rysmendeevadalida01@gmail.com</span>
+            <span><i class="fas fa-phone mr-2"></i>+996 554 306 190</span>
+        </div>
+    </header>
 
-<textarea id="userInput" rows="6" placeholder="Вставьте текст для проверки..." class="w-full p-4 rounded bg-slate-900 border border-slate-700 resize-y"></textarea>
+    <main class="container mx-auto px-6 py-16">
+        
+        <section class="max-w-3xl mx-auto mb-24 ai-panel rounded-3xl p-8 shadow-2xl border border-indigo-500/30">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-2 gradient-text uppercase tracking-widest">AIdent Tool</h2>
+                <p class="text-slate-400 text-sm">Локальный анализ текста (Transformers.js)</p>
+                <div id="modelStatus" class="flex items-center justify-center gap-2 text-indigo-400 text-[10px] mt-4 uppercase tracking-widest font-bold">
+                    <div id="statusDot" class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></div>
+                    <span id="statusText">Инициализация модели...</span>
+                </div>
+            </div>
 
-<button id="checkBtn" class="w-full mt-6 bg-indigo-600 hover:bg-indigo-500 p-4 rounded text-lg font-medium transition">Проверить</button>
+            <textarea id="aiInput" rows="6" 
+                class="w-full bg-slate-900/80 border border-slate-700 rounded-2xl p-4 text-slate-200 focus:border-indigo-500 outline-none transition-all mb-4 placeholder:text-slate-600"
+                placeholder="Вставьте английский текст для анализа..."></textarea>
 
-<div id="result" class="mt-6 text-center text-slate-300 min-h-[100px]">Результат появится здесь</div>
-</section>
+            <button id="checkBtn" disabled 
+                class="w-full py-4 bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 disabled:text-slate-500 text-white font-bold rounded-xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
+                <i class="fas fa-bolt"></i>
+                <span>Загрузка...</span>
+            </button>
 
-<main class="container mx-auto px-6 py-16">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-<video controls class="w-full h-48 object-cover"><source src="project1.mp4" type="video/mp4"></video>
-<div class="p-4"><h3 class="text-indigo-300 font-bold">Шум и фильтры</h3><p class="text-sm text-slate-400">Очистка изображений с помощью Blur, Gaussian и Median фильтров.</p></div>
-</div>
-<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-<video controls class="w-full h-48 object-cover"><source src="project2.mp4" type="video/mp4"></video>
-<div class="p-4"><h3 class="text-indigo-300 font-bold">Детекция границ</h3><p class="text-sm text-slate-400">Использование операторов Sobel и Laplacian.</p></div>
-</div>
-<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-<video controls class="w-full h-48 object-cover"><source src="project3.mp4" type="video/mp4"></video>
-<div class="p-4"><h3 class="text-indigo-300 font-bold">Детектор Canny</h3><p class="text-sm text-slate-400">Получение точных контуров объектов.</p></div>
-</div>
-<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-<video controls class="w-full h-48 object-cover"><source src="project4.mp4" type="video/mp4"></video>
-<div class="p-4"><h3 class="text-indigo-300 font-bold">Бинаризация</h3><p class="text-sm text-slate-400">Пороговые методы Simple и Otsu.</p></div>
-</div>
-<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-<video controls class="w-full h-48 object-cover"><source src="project5.mp4" type="video/mp4"></video>
-<div class="p-4"><h3 class="text-indigo-300 font-bold">Морфология</h3><p class="text-sm text-slate-400">Open и Close операции для очистки масок.</p></div>
-</div>
-<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-<video controls class="w-full h-48 object-cover"><source src="project6.mp4" type="video/mp4"></video>
-<div class="p-4"><h3 class="text-indigo-300 font-bold">Детекция и подсчет объектов</h3><p class="text-sm text-slate-400">Bounding Box и фильтрация контуров по площади.</p></div>
-</div>
-</div>
-</main>
+            <div id="aiResult" class="hidden mt-8 transition-all">
+                </div>
+        </section>
 
-<footer class="text-center py-10 border-t border-slate-800 text-slate-400 text-sm">
-<p>© 2026 год • Все права защищены</p>
-<p class="mt-2">Контакты: +996 554 306 190</p>
-<p>rysmendeevadalida01@gmail.com</p>
-</footer>
+        <h2 class="text-2xl font-bold mb-10 text-slate-400 uppercase tracking-widest border-l-4 border-indigo-500 pl-4">Computer Vision Projects</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <script>
+                const projects = [
+                    "Шум и Фильтры", "Детекция границ", "Детектор Canny", 
+                    "Бинаризация", "Морфология", "Детекция и подсчет"
+                ];
+                projects.forEach((title, i) => {
+                    document.write(`
+                        <div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden glow-card">
+                            <video controls class="w-full h-48 object-cover bg-black">
+                                <source src="project${i+1}.mp4" type="video/mp4">
+                            </video>
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold mb-2 text-indigo-300">${title}</h3>
+                                <p class="text-sm text-slate-400 font-light">Проект выполнен в рамках курса Computer Vision.</p>
+                            </div>
+                        </div>
+                    `);
+                });
+            </script>
+        </div>
+    </main>
 
-<script>
-const API_URL = "https://router.huggingface.co/hf-inference/models/fakespot-ai/roberta-base-ai-text-detection-v1";
-const API_TOKEN = "hf_ЗАМЕНИ_ЭТУ_СТРОКУ_СВОИМ_НОВЫМ_ТОКЕНОМ";  // ← вставь сюда новый токен!
+    <footer class="text-center py-12 text-slate-600 text-xs border-t border-slate-900">
+        <p>© 2026 • Рысмендеева Далида • Все данные защищены</p>
+    </footer>
 
-document.getElementById("checkBtn").addEventListener("click", async () => {
-    const text = document.getElementById("userInput").value.trim();
-    const resultDiv = document.getElementById("result");
+    <script type="module">
+        import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2';
 
-    if (text.length < 20) {
-        resultDiv.innerHTML = '<span style="color:#ef4444">Введите больше текста (минимум 20 символов)</span>';
-        return;
-    }
+        // Отключаем поиск локальных файлов, работаем только через CDN
+        env.allowLocalModels = false;
+        env.useBrowserCache = true;
 
-    resultDiv.innerHTML = 'Проверяю... ⏳';
+        const statusText = document.getElementById('statusText');
+        const statusDot = document.getElementById('statusDot');
+        const btn = document.getElementById('checkBtn');
+        const resultDiv = document.getElementById('aiResult');
+        let classifier;
 
-    try {
-        const response = await fetch(API_URL, {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${API_TOKEN}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ inputs: text })
+        // Загрузка модели (БЕЗ ТОКЕНА)
+        (async () => {
+            try {
+                statusText.innerText = "Скачивание модели (около 100MB)...";
+                classifier = await pipeline('text-classification', 'silentone0725/text-detector-model-v2');
+                
+                statusText.innerText = "Модель готова (на устройстве)";
+                statusDot.classList.replace('bg-yellow-500', 'bg-emerald-500');
+                statusDot.classList.remove('animate-pulse');
+                btn.disabled = false;
+                btn.querySelector('span').innerText = "Проверить текст";
+            } catch (err) {
+                statusText.innerText = "Ошибка загрузки модели";
+                statusDot.classList.replace('bg-yellow-500', 'bg-red-500');
+                console.error("Fetch Error:", err);
+            }
+        })();
+
+        btn.addEventListener('click', async () => {
+            const text = document.getElementById('aiInput').value.trim();
+            if (text.length < 20) return alert("Введите более длинный текст.");
+
+            btn.disabled = true;
+            btn.querySelector('span').innerText = "Анализирую...";
+            resultDiv.classList.add('hidden');
+
+            try {
+                // Выполнение прямо на устройстве
+                const output = await classifier(text);
+                const score = output[0].score;
+                const label = output[0].label; 
+
+                // Определяем ИИ (обычно LABEL_1 или Fake)
+                let aiScore = (label.includes('1') || label.toLowerCase().includes('fake') || label.toLowerCase().includes('ai')) ? score : 1 - score;
+                let humanScore = 1 - aiScore;
+
+                resultDiv.innerHTML = `
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-slate-900/90 p-6 rounded-2xl border border-red-500/20 text-center">
+                            <p class="text-[10px] text-slate-500 uppercase mb-1 font-bold">AI Probability</p>
+                            <p class="text-4xl font-bold text-red-500">${(aiScore * 100).toFixed(1)}%</p>
+                        </div>
+                        <div class="bg-slate-900/90 p-6 rounded-2xl border border-emerald-500/20 text-center">
+                            <p class="text-[10px] text-slate-500 uppercase mb-1 font-bold">Human Score</p>
+                            <p class="text-4xl font-bold text-emerald-500">${(humanScore * 100).toFixed(1)}%</p>
+                        </div>
+                    </div>
+                `;
+                resultDiv.classList.remove('hidden');
+            } catch (e) {
+                alert("Ошибка анализа: " + e.message);
+            } finally {
+                btn.disabled = false;
+                btn.querySelector('span').innerText = "Проверить текст";
+            }
         });
-
-        if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`Ошибка сервера: ${response.status} — ${errorText || 'проверь токен'}`);
-        }
-
-        const data = await response.json();
-
-        // Модель возвращает массив с объектами {label: 'AI' или 'Human', score: число}
-        if (Array.isArray(data) && data.length > 0) {
-            const top = data[0];
-            const label = top.label;
-            const score = top.score;
-
-            let aiPercent = (label === 'AI' || label.toLowerCase().includes('fake') || label.toLowerCase().includes('generated')) ? score : 1 - score;
-            let humanPercent = 1 - aiPercent;
-
-            resultDiv.innerHTML = `
-                <div style="font-size:2rem; font-weight:bold; margin:1rem 0;">
-                    🤖 ИИ: <span style="color:#ef4444">${(aiPercent * 100).toFixed(1)}%</span><br>
-                    👤 Человек: <span style="color:#10b981">${(humanPercent * 100).toFixed(1)}%</span>
-                </div>
-                <div style="color:#94a3b8; font-size:1rem;">
-                    Метка модели: ${label} (уверенность ${Math.round(Math.max(aiPercent, humanPercent) * 100)}%)
-                </div>
-            `;
-        } else {
-            resultDiv.innerHTML = '<span style="color:#ef4444">Неожиданный ответ от модели</span>';
-        }
-    } catch (error) {
-        console.error(error);
-        resultDiv.innerHTML = `<span style="color:#ef4444">Ошибка: ${error.message}</span><br>Скорее всего проблема с токеном — создай новый на huggingface.co/settings/tokens`;
-    }
-});
-</script>
+    </script>
 </body>
 </html>
