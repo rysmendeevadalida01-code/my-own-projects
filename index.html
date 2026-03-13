@@ -1,160 +1,160 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AIdent Portfolio — Далида</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2"></script> <!-- Transformers.js CDN -->
-<style>
-body{font-family:Arial;background:#0f172a;color:white;}
-.glow-card:hover{transform:translateY(-8px);box-shadow:0 0 20px rgba(99,102,241,0.5);transition:0.3s;}
-.gradient-text{background:linear-gradient(90deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-textarea{color:white;}
-#loading-model {color: #a5b4fc; font-style: italic;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dalida Portfolio | AIdent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap');
+        body { font-family: 'Space Grotesk', sans-serif; background: #0f172a; color: #f8fafc; }
+        .card { background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(99, 102, 241, 0.1); border-radius: 24px; }
+        .gradient-text { background: linear-gradient(90deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glow-button { transition: 0.3s; background: #4f46e5; }
+        .glow-button:hover:not(:disabled) { background: #6366f1; box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); transform: translateY(-2px); }
+        .glow-button:disabled { background: #1e293b; color: #475569; cursor: not-allowed; }
+    </style>
 </head>
-<body>
-<header class="text-center py-12 border-b border-slate-700">
-<h1 class="text-5xl font-bold gradient-text">Рысмендеева Далида</h1>
-<p class="text-indigo-300 mt-4 text-lg">24 ШГ • 10 класс • CV Developer</p>
-</header>
+<body class="selection:bg-indigo-500/30">
 
-<section class="max-w-3xl mx-auto mt-16 p-8 bg-slate-800 rounded-xl">
-<h2 class="text-2xl font-bold text-indigo-300 mb-4 text-center">AIdent — Проверка текста на ИИ</h2>
-<p class="text-center text-indigo-400 mb-6">
-Распознаёт ИИ-текст от человеческого<br>
-(модель запускается прямо в браузере с помощью Transformers.js)
-</p>
+    <header class="py-16 text-center">
+        <h1 class="text-5xl font-bold gradient-text tracking-tighter">Рысмендеева Далида</h1>
+        <p class="text-indigo-300 mt-2 uppercase tracking-[0.3em] text-xs">Computer Vision & AI Developer</p>
+    </header>
 
-<textarea
-id="userInput"
-rows="6"
-placeholder="Вставьте текст для проверки..."
-class="w-full p-4 rounded bg-slate-900 border border-slate-700 resize-y"
-></textarea>
-
-<button
-id="checkBtn"
-class="w-full mt-6 bg-indigo-600 hover:bg-indigo-500 p-4 rounded text-lg font-medium transition disabled:opacity-50"
-disabled
->
-Проверить
-</button>
-
-<div id="result" class="mt-6 text-center text-slate-300 min-h-[100px]">
-<span id="loading-model">Загружаю модель... (первый раз может занять 20–60 сек)</span>
-</div>
-</section>
-
-<main class="container mx-auto px-6 py-16">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-<video controls class="w-full h-48 object-cover"><source src="project1.mp4" type="video/mp4"></video>
-<div class="p-4"><h3 class="text-indigo-300 font-bold">Шум и фильтры</h3><p class="text-sm text-slate-400">Очистка изображений с помощью Blur, Gaussian и Median фильтров.</p></div>
-</div>
-
-<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-<video controls class="w-full h-48 object-cover"><source src="project2.mp4" type="video/mp4"></video>
-<div class="p-4"><h3 class="text-indigo-300 font-bold">Детекция границ</h3><p class="text-sm text-slate-400">Использование операторов Sobel и Laplacian.</p></div>
-</div>
-
-<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-<video controls class="w-full h-48 object-cover"><source src="project3.mp4" type="video/mp4"></video>
-<div class="p-4"><h3 class="text-indigo-300 font-bold">Детектор Canny</h3><p class="text-sm text-slate-400">Получение точных контуров объектов.</p></div>
-</div>
-
-<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-<video controls class="w-full h-48 object-cover"><source src="project4.mp4" type="video/mp4"></video>
-<div class="p-4"><h3 class="text-indigo-300 font-bold">Бинаризация</h3><p class="text-sm text-slate-400">Пороговые методы Simple и Otsu.</p></div>
-</div>
-
-<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-<video controls class="w-full h-48 object-cover"><source src="project5.mp4" type="video/mp4"></video>
-<div class="p-4"><h3 class="text-indigo-300 font-bold">Морфология</h3><p class="text-sm text-slate-400">Open и Close операции для очистки масок.</p></div>
-</div>
-
-<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-<video controls class="w-full h-48 object-cover"><source src="project6.mp4" type="video/mp4"></video>
-<div class="p-4"><h3 class="text-indigo-300 font-bold">Детекция и подсчет объектов</h3><p class="text-sm text-slate-400">Bounding Box и фильтрация контуров по площади.</p></div>
-</div>
-
-</div>
-</main>
-
-<footer class="text-center py-10 border-t border-slate-800 text-slate-400 text-sm">
-<p>© 2026 год • Все права защищены</p>
-<p class="mt-2">Контакты: +996 554 306 190</p>
-<p>rysmendeevadalida01@gmail.com</p>
-</footer>
-
-<script>
-let classifier = null;
-
-async function loadModel() {
-    try {
-        const { pipeline } = Xenova;  // из CDN @xenova/transformers
-        classifier = await pipeline('text-classification', 'fakespot-ai/roberta-base-ai-text-detection-v1');
-        document.getElementById('loading-model').innerText = 'Модель готова! ✅';
-        document.getElementById('checkBtn').disabled = false;
-    } catch (err) {
-        console.error(err);
-        document.getElementById('loading-model').innerHTML = '<span class="text-red-400">Ошибка загрузки модели: ' + err.message + '</span><br>Попробуйте обновить страницу или использовать Chrome.';
-    }
-}
-
-// Загружаем модель при открытии страницы
-loadModel();
-
-document.getElementById('checkBtn').addEventListener('click', async () => {
-    const text = document.getElementById('userInput').value.trim();
-    const resultDiv = document.getElementById('result');
-
-    if (text.length < 30) {
-        resultDiv.innerHTML = '<span class="text-red-400">Введите минимум 30 символов!</span>';
-        return;
-    }
-
-    if (!classifier) {
-        resultDiv.innerHTML = '<span class="text-yellow-400">Модель ещё загружается... Подождите.</span>';
-        return;
-    }
-
-    resultDiv.innerHTML = 'Анализирую... ⏳';
-
-    try {
-        const output = await classifier(text, { truncation: true, max_length: 512 });
-
-        // output обычно массив с одним объектом
-        const top = output[0];
-        const label = top.label.toLowerCase();
-        const score = top.score;
-
-        let aiPercent, humanPercent;
-
-        if (label.includes('ai') || label.includes('fake') || label.includes('generated')) {
-            aiPercent = (score * 100).toFixed(1);
-            humanPercent = (100 - aiPercent).toFixed(1);
-        } else {
-            humanPercent = (score * 100).toFixed(1);
-            aiPercent = (100 - humanPercent).toFixed(1);
-        }
-
-        resultDiv.innerHTML = `
-            <div class="text-2xl font-bold mt-4">
-                🤖 ИИ: <span class="text-red-400">${aiPercent}%</span><br>
-                👤 Человек: <span class="text-green-400">${humanPercent}%</span>
+    <main class="container mx-auto px-6 max-w-5xl">
+        
+        <section class="card p-8 mb-20 shadow-2xl">
+            <div class="flex flex-col items-center mb-8">
+                <h2 class="text-4xl font-bold mb-2 uppercase tracking-widest">AIdent</h2>
+                <div id="loader-box" class="flex items-center gap-2 text-xs font-bold text-indigo-400">
+                    <div id="status-dot" class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></div>
+                    <span id="status-text">ИНИЦИАЛИЗАЦИЯ ИИ...</span>
+                </div>
             </div>
-            <div class="text-sm text-slate-500 mt-2">
-                (уверенность: ${Math.round(Math.max(aiPercent, humanPercent))}%)
+
+            <textarea id="userInput" rows="6" 
+                class="w-full bg-slate-900/50 border border-slate-700 rounded-2xl p-6 text-lg outline-none focus:border-indigo-500 transition-all mb-6 placeholder:text-slate-500"
+                placeholder="Вставьте английский текст для анализа нейросетью..."></textarea>
+
+            <button id="runBtn" disabled class="glow-button w-full py-4 rounded-xl font-bold uppercase tracking-widest text-base">
+                Проверить текст
+            </button>
+
+            <div id="resultArea" class="hidden mt-10 space-y-6 pt-6 border-t border-slate-800">
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="text-center p-6 bg-slate-900/80 rounded-3xl border border-red-500/10 transition-all hover:border-red-500/30">
+                        <p class="text-xs text-slate-500 mb-2 uppercase tracking-widest font-bold">Вероятность ИИ</p>
+                        <p id="aiVal" class="text-5xl font-bold text-red-500">0%</p>
+                    </div>
+                    <div class="text-center p-6 bg-slate-900/80 rounded-3xl border border-emerald-500/10 transition-all hover:border-emerald-500/30">
+                        <p class="text-xs text-slate-500 mb-2 uppercase tracking-widest font-bold">Человек</p>
+                        <p id="humanVal" class="text-5xl font-bold text-emerald-500">0%</p>
+                    </div>
+                </div>
             </div>
-        `;
-    } catch (err) {
-        console.error(err);
-        resultDiv.innerHTML = '<span class="text-red-400">Ошибка анализа: ' + err.message + '</span>';
-    }
-});
-</script>
+        </section>
+
+        <h3 class="text-xl font-bold mb-8 text-slate-400 uppercase tracking-[0.2em] border-l-2 border-indigo-500 pl-4">OpenCV Works</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+            <script>
+                const projects = ["Шум и фильтры", "Детекция границ", "Детектор Canny", "Бинаризация", "Морфология", "Детекция объектов"];
+                projects.forEach((name, i) => {
+                    document.write(`
+                        <div class="card overflow-hidden group">
+                            <div class="h-48 bg-black relative">
+                                <video controls class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+                                    <source src="project${i+1}.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="p-5 border-t border-slate-800">
+                                <h4 class="font-bold text-indigo-200 text-sm tracking-wide uppercase">${name}</h4>
+                            </div>
+                        </div>
+                    `);
+                });
+            </script>
+        </div>
+    </main>
+
+    <footer class="border-t border-slate-900 py-16 text-center bg-slate-950/50">
+        <div class="flex flex-col md:flex-row justify-center items-center gap-8 mb-8 text-sm text-slate-400">
+            <a href="tel:+996554306190" class="hover:text-white transition"><i class="fas fa-phone text-indigo-500 mr-2"></i>+996 554 306 190</a>
+            <a href="mailto:rysmendeevadalida01@gmail.com" class="hover:text-white transition"><i class="fas fa-envelope text-indigo-500 mr-2"></i>rysmendeevadalida01@gmail.com</a>
+        </div>
+        <p class="text-[10px] text-slate-600 uppercase tracking-[0.5em]">© 2026 год • Все права защищены</p>
+    </footer>
+
+    <script type="module">
+        import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2';
+
+        env.allowLocalModels = false;
+        env.useBrowserCache = true;
+
+        const statusText = document.getElementById('status-text');
+        const statusDot = document.getElementById('status-dot');
+        const btn = document.getElementById('runBtn');
+        const resArea = document.getElementById('resultArea');
+        
+        let detector;
+
+        // Запуск пайплайна Transformers.js
+        (async () => {
+            try {
+                statusText.innerText = "ПОДГОТОВКА МОДЕЛИ...";
+                
+                // Загружаем модель детекции текста
+                detector = await pipeline('text-classification', 'Xenova/roberta-base-openai-detector');
+                
+                statusText.innerText = "ГОТОВО К РАБОТЕ ✅";
+                statusDot.className = "w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981]";
+                btn.disabled = false;
+            } catch (err) {
+                statusText.innerText = "ОШИБКА ЗАГРУЗКИ";
+                statusDot.className = "w-2 h-2 rounded-full bg-red-500";
+                console.error("Ошибка Transformers.js:", err);
+            }
+        })();
+
+        btn.onclick = async () => {
+            const val = document.getElementById('userInput').value.trim();
+            if (val.length < 20) return alert("Пожалуйста, введите текст подлиннее (от 20 символов) для точного анализа.");
+
+            btn.disabled = true;
+            btn.innerText = "АНАЛИЗ В БРАУЗЕРЕ...";
+            resArea.classList.add('hidden');
+
+            try {
+                const out = await detector(val);
+                const result = out[0]; 
+                
+                let aiProbability = 0;
+                let humanProbability = 0;
+
+                // Обработка меток от модели Transformers.js
+                if (result.label.toLowerCase() === 'fake') {
+                    aiProbability = result.score;
+                    humanProbability = 1 - result.score;
+                } else {
+                    humanProbability = result.score;
+                    aiProbability = 1 - result.score;
+                }
+
+                // Вывод результатов
+                document.getElementById('aiVal').innerText = (aiProbability * 100).toFixed(1) + "%";
+                document.getElementById('humanVal').innerText = (humanProbability * 100).toFixed(1) + "%";
+                resArea.classList.remove('hidden');
+                
+                resArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } catch (e) {
+                alert("Ошибка анализа: " + e.message);
+                console.error(e);
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "ПРОВЕРИТЬ ТЕКСТ";
+            }
+        };
+    </script>
 </body>
 </html>
