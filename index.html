@@ -1,74 +1,121 @@
-<script type="module">
-    // Используем современную и стабильную версию библиотеки
-    import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2';
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dalida CV | AI Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap');
+        body { font-family: 'Space Grotesk', sans-serif; background: #0f172a; color: #f8fafc; }
+        .gradient-text { background: linear-gradient(90deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card { background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; transition: 0.3s; }
+        .card:hover { border-color: #6366f1; transform: translateY(-5px); }
+    </style>
+</head>
+<body>
 
-    // Настройки окружения (важно для работы на GitHub Pages)
-    env.allowLocalModels = false;
-    env.useBrowserCache = true;
+    <header class="py-12 px-6 text-center border-b border-slate-800">
+        <h1 class="text-5xl font-bold gradient-text">Рысмендеева Далида</h1>
+        <p class="text-indigo-300 mt-2 uppercase tracking-widest text-sm font-light">24 ШГ • 10 Класс • CV Developer</p>
+        <div class="mt-4 text-slate-500 text-xs space-x-4">
+            <span><i class="fas fa-phone"></i> +996 554 306 190</span>
+            <span><i class="fas fa-envelope"></i> rysmendeevadalida01@gmail.com</span>
+        </div>
+    </header>
 
-    const statusText = document.getElementById('statusText');
-    const statusDot = document.getElementById('statusDot');
-    const btn = document.getElementById('checkBtn');
-    const resultDiv = document.getElementById('aiResult');
-    let classifier;
-
-    // ЗАГРУЗКА: Теперь без всяких fetch-заголовков и токенов!
-    (async () => {
-        try {
-            statusText.innerText = "📥 Загрузка нейросети (около 100MB)...";
+    <main class="container mx-auto px-6 py-12">
+        
+        <section class="max-w-2xl mx-auto mb-20 card p-8">
+            <h2 class="text-2xl font-bold mb-4 text-center">AIdent Tool</h2>
+            <p id="status" class="text-center text-indigo-400 text-xs mb-6 animate-pulse">Загрузка нейросети в браузер...</p>
             
-            // Библиотека сама скачает модель silentone0725/text-detector-model-v2
-            classifier = await pipeline('text-classification', 'silentone0725/text-detector-model-v2');
+            <textarea id="textInput" rows="5" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-sm outline-none focus:border-indigo-500 mb-4" placeholder="Вставьте текст на английском..."></textarea>
             
-            statusText.innerText = "✅ Модель готова (Локально)";
-            statusDot.className = "w-2 h-2 rounded-full bg-emerald-500";
-            btn.disabled = false;
-            btn.querySelector('span').innerText = "Проверить текст";
-        } catch (err) {
-            statusText.innerText = "❌ Ошибка загрузки модели";
-            statusDot.className = "w-2 h-2 rounded-full bg-red-500";
-            console.error("Ошибка инициализации:", err);
-        }
-    })();
+            <button id="checkBtn" disabled class="w-full bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 py-4 rounded-xl font-bold transition-all">
+                Проверить
+            </button>
 
-    // АНАЛИЗ: Происходит прямо в браузере
-    btn.addEventListener('click', async () => {
-        const text = document.getElementById('aiInput').value.trim();
-        if (text.length < 25) return alert("Введите хотя бы 25 символов.");
-
-        btn.disabled = true;
-        btn.querySelector('span').innerText = "Нейросеть думает...";
-        resultDiv.classList.add('hidden');
-
-        try {
-            // Вычисление без запросов к серверу!
-            const output = await classifier(text);
-            const score = output[0].score;
-            const label = output[0].label; 
-
-            // Логика: если LABEL_1 или Fake — это ИИ
-            let aiScore = (label.includes('1') || label.toLowerCase().includes('fake')) ? score : 1 - score;
-            let humanScore = 1 - aiScore;
-
-            resultDiv.innerHTML = `
+            <div id="result" class="mt-8 hidden">
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-slate-900/90 p-6 rounded-2xl border border-red-500/20 text-center">
-                        <p class="text-[10px] text-slate-500 uppercase font-bold mb-1">AI Score</p>
-                        <p class="text-4xl font-bold text-red-500">${(aiScore * 100).toFixed(1)}%</p>
+                    <div class="text-center p-4 bg-slate-900 rounded-xl border border-red-500/20">
+                        <span class="block text-[10px] text-slate-500">AI SCORE</span>
+                        <span id="aiScore" class="text-3xl font-bold text-red-500">0%</span>
                     </div>
-                    <div class="bg-slate-900/90 p-6 rounded-2xl border border-emerald-500/20 text-center">
-                        <p class="text-[10px] text-slate-500 uppercase font-bold mb-1">Human Score</p>
-                        <p class="text-4xl font-bold text-emerald-500">${(humanScore * 100).toFixed(1)}%</p>
+                    <div class="text-center p-4 bg-slate-900 rounded-xl border border-emerald-500/20">
+                        <span class="block text-[10px] text-slate-500">HUMAN SCORE</span>
+                        <span id="humanScore" class="text-3xl font-bold text-emerald-500">0%</span>
                     </div>
                 </div>
-                <p class="mt-4 text-center text-sm italic text-indigo-300">Анализ завершен локально.</p>
-            `;
-            resultDiv.classList.remove('hidden');
-        } catch (e) {
-            alert("Ошибка анализа: " + e.message);
-        } finally {
-            btn.disabled = false;
-            btn.querySelector('span').innerText = "Проверить текст";
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <script>
+                const titles = ["Шум и Фильтры", "Детекция границ", "Детектор Canny", "Бинаризация", "Морфология", "Детекция и подсчет"];
+                titles.forEach((t, i) => {
+                    document.write(`
+                        <div class="card overflow-hidden">
+                            <video controls class="w-full h-48 object-cover bg-black">
+                                <source src="project${i+1}.mp4" type="video/mp4">
+                            </video>
+                            <div class="p-4"><h3 class="font-bold text-indigo-300 text-sm">${t}</h3></div>
+                        </div>
+                    `);
+                });
+            </script>
+        </div>
+    </main>
+
+    <script type="module">
+        // Импортируем только то, что нужно
+        import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2';
+
+        // Отключаем всё лишнее
+        env.allowLocalModels = false;
+        env.useBrowserCache = true;
+
+        let detector;
+
+        // Прямой обходной путь инициализации
+        async function load() {
+            try {
+                // Модель silentone0725/text-detector-model-v2
+                detector = await pipeline('text-classification', 'silentone0725/text-detector-model-v2');
+                document.getElementById('status').innerText = "✅ Нейросеть готова";
+                document.getElementById('status').classList.remove('animate-pulse');
+                document.getElementById('checkBtn').disabled = false;
+            } catch (e) {
+                document.getElementById('status').innerText = "❌ Ошибка загрузки";
+            }
         }
-    });
-</script>
+
+        load();
+
+        document.getElementById('checkBtn').onclick = async () => {
+            const text = document.getElementById('textInput').value;
+            if (text.length < 20) return alert("Текст слишком короткий");
+
+            document.getElementById('checkBtn').innerText = "Считаю...";
+            
+            try {
+                const output = await detector(text);
+                const score = output[0].score;
+                const label = output[0].label;
+
+                let ai = (label.includes('1') || label.toLowerCase().includes('fake')) ? score : 1 - score;
+                let human = 1 - ai;
+
+                document.getElementById('aiScore').innerText = Math.round(ai * 100) + "%";
+                document.getElementById('humanScore').innerText = Math.round(human * 100) + "%";
+                document.getElementById('result').classList.remove('hidden');
+            } catch (err) {
+                alert("Ошибка: " + err.message);
+            } finally {
+                document.getElementById('checkBtn').innerText = "Проверить";
+            }
+        };
+    </script>
+</body>
+</html>
