@@ -189,24 +189,29 @@ rysmendeevadalida01@gmail.com
 
 <script>
 
+
 const API_URL="https://api-inference.huggingface.co/models/openai-community/roberta-base-openai-detector"
 
 const API_TOKEN="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"
 
-document.getElementById("checkBtn").addEventListener("click",async()=>{
+document.getElementById("checkBtn").addEventListener("click", async () => {
 
 const text=document.getElementById("userInput").value
-
 const result=document.getElementById("result")
 
-result.innerText="Анализирую..."
+if(text.length<20){
+result.innerText="Введите больше текста"
+return
+}
+
+result.innerText="Анализирую текст..."
 
 try{
 
 const response=await fetch(API_URL,{
 method:"POST",
 headers:{
-Authorization:`Bearer ${API_TOKEN}`,
+"Authorization":`Bearer ${API_TOKEN}`,
 "Content-Type":"application/json"
 },
 body:JSON.stringify({inputs:text})
@@ -214,15 +219,26 @@ body:JSON.stringify({inputs:text})
 
 const data=await response.json()
 
-const fake=data.find(x=>x.label==="Fake")?.score||0
-const real=data.find(x=>x.label==="Real")?.score||0
+console.log(data)
+
+let fake=0
+let real=0
+
+if(Array.isArray(data)){
+
+data.forEach(item=>{
+if(item.label==="Fake"){fake=item.score}
+if(item.label==="Real"){real=item.score}
+})
+
+}
 
 result.innerHTML=`
-ИИ: ${(fake*100).toFixed(2)}% <br>
-Человек: ${(real*100).toFixed(2)}%
+<p>🤖 ИИ: <b>${(fake*100).toFixed(2)}%</b></p>
+<p>👤 Человек: <b>${(real*100).toFixed(2)}%</b></p>
 `
 
-}catch(err){
+}catch(e){
 
 result.innerText="Ошибка соединения с моделью"
 
