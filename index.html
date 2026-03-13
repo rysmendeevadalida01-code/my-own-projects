@@ -41,19 +41,9 @@ color:white;
 AIdent — Проверка текста на ИИ
 </h2>
 <p class="text-center text-indigo-400 mb-6">
-Распознаёт ИИ-текст от человеческого<br>
-с помощью современной модели <strong>fakespot-ai/roberta-base-ai-text-detection-v1</strong>
+Распознаёт ИИ-текст от человеческого с помощью модели<br>
+<strong>fakespot-ai/roberta-base-ai-text-detection-v1</strong>
 </p>
-
-<!-- Ссылка на модель (красивая кнопка) -->
-<div class="text-center mb-6">
-<a href="https://huggingface.co/fakespot-ai/roberta-base-ai-text-detection-v1" 
-   target="_blank"
-   class="inline-flex items-center gap-2 bg-slate-700 hover:bg-slate-600 px-6 py-3 rounded-full text-indigo-300 transition">
-   👀 Посмотреть модель на Hugging Face
-   <span class="text-xl">→</span>
-</a>
-</div>
 
 <textarea
 id="userInput"
@@ -65,11 +55,11 @@ class="w-full p-4 rounded bg-slate-900 border border-slate-700"
 <button
 id="checkBtn"
 class="w-full mt-6 bg-indigo-600 hover:bg-indigo-500 p-4 rounded text-lg font-medium transition">
-Проверить → (перенос на HF)
+Проверить
 </button>
 
-<div id="result" class="mt-6 text-center text-slate-300 text-sm">
-Результат появится на странице модели Hugging Face после вставки текста и нажатия Compute.
+<div id="result" class="mt-6 text-center text-slate-300">
+Результат появится здесь
 </div>
 </section>
 
@@ -160,34 +150,68 @@ Bounding Box и фильтрация контуров по площади.
 </footer>
 
 <script>
+const API_URL = "https://router.huggingface.co/hf-inference/models/fakespot-ai/roberta-base-ai-text-detection-v1";
+const API_TOKEN = "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"
+
 document.getElementById("checkBtn").addEventListener("click", async () => {
     const text = document.getElementById("userInput").value.trim();
     const resultDiv = document.getElementById("result");
 
     if (text.length < 30) {
-        resultDiv.innerHTML = `<span class="text-red-400">Введите минимум 30 символов для нормальной проверки!</span>`;
+        resultDiv.innerHTML = `<span class="text-red-400">Введите минимум 30 символов!</span>`;
         return;
     }
 
+    resultDiv.innerHTML = "Анализирую текст... ⏳";
+
     try {
-        // Копируем текст в буфер обмена
-        await navigator.clipboard.writeText(text);
-        
-        resultDiv.innerHTML = `
-            <span class="text-green-400">Текст скопирован в буфер! ✅</span><br>
-            Сейчас откроется страница модели на Hugging Face.<br>
-            Просто <b>вставь (Ctrl+V)</b> текст в поле и нажми Compute.
-        `;
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${API_TOKEN}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ inputs: text })
+        });
 
-        // Перенос через 1.5 секунды (чтобы пользователь успел прочитать)
-        setTimeout(() => {
-            window.open("https://huggingface.co/fakespot-ai/roberta-base-ai-text-detection-v1", "_blank");
-        }, 1500);
+        if (!response.ok) {
+            throw new Error(`Ошибка: ${response.status} ${response.statusText}`);
+        }
 
-    } catch (err) {
-        console.error('Ошибка копирования:', err);
-        resultDiv.innerHTML = `Не удалось скопировать текст автоматически.<br>Откроем модель — вставь текст вручную.`;
-        window.open("https://huggingface.co/fakespot-ai/roberta-base-ai-text-detection-v1", "_blank");
+        const data = await response.json();
+        console.log("Ответ от HF:", data);
+
+        if (Array.isArray(data) && data.length > 0) {
+            const item = data[0];
+            const label = item.label;  // 'AI' или 'Human'
+            const score = item.score;
+
+            let aiPercent = 0;
+            let humanPercent = 0;
+
+            if (label === "AI") {
+                aiPercent = (score * 100).toFixed(2);
+                humanPercent = ((1 - score) * 100).toFixed(2);
+            } else if (label === "Human") {
+                humanPercent = (score * 100).toFixed(2);
+                aiPercent = ((1 - score) * 100).toFixed(2);
+            } else {
+                resultDiv.innerHTML = `Неизвестная метка: ${label}`;
+                return;
+            }
+
+            resultDiv.innerHTML = `
+                <p class="text-xl font-bold">🤖 ИИ: <span class="text-red-400">${aiPercent}%</span></p>
+                <p class="text-xl font-bold">👤 Человек: <span class="text-green-400">${humanPercent}%</span></p>
+                <p class="text-sm mt-3 text-slate-500">(модель: fakespot-ai/roberta-base-ai-text-detection-v1)</p>
+            `;
+        } else {
+            resultDiv.innerHTML = "Неожиданный ответ от модели 😕";
+        }
+
+    } catch (error) {
+        console.error(error);
+        resultDiv.innerHTML = `Ошибка: ${error.message}<br>Проверь токен или попробуй позже.`;
     }
 });
 </script>
