@@ -6,140 +6,56 @@
 <title>AIdent Portfolio</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-body{
-font-family:Arial;
-background:#0f172a;
-color:white;
-}
-.glow-card:hover{
-transform:translateY(-8px);
-box-shadow:0 0 20px rgba(99,102,241,0.5);
-transition:0.3s;
-}
-.gradient-text{
-background:linear-gradient(90deg,#818cf8,#c084fc);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
-textarea{
-color:white;
-}
+body{font-family:Arial;background:#0f172a;color:white;}
+.glow-card:hover{transform:translateY(-8px);box-shadow:0 0 20px rgba(99,102,241,0.5);transition:0.3s;}
+.gradient-text{background:linear-gradient(90deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+textarea{color:white;}
 </style>
 </head>
 <body>
 <header class="text-center py-12 border-b border-slate-700">
-<h1 class="text-5xl font-bold gradient-text">
-Рысмендеева Далида
-</h1>
-<p class="text-indigo-300 mt-4 text-lg">
-24 ШГ • 10 класс • CV Developer
-</p>
+<h1 class="text-5xl font-bold gradient-text">Рысмендеева Далида</h1>
+<p class="text-indigo-300 mt-4 text-lg">24 ШГ • 10 класс • CV Developer</p>
 </header>
 
 <section class="max-w-3xl mx-auto mt-16 p-8 bg-slate-800 rounded-xl">
-<h2 class="text-2xl font-bold text-indigo-300 mb-4 text-center">
-AIdent — Проверка текста на ИИ
-</h2>
-<p class="text-center text-indigo-400 mb-6">
-Распознаёт, написан ли текст человеком или ИИ<br>
-(модель: fakespot-ai/roberta-base-ai-text-detection-v1)
-</p>
+<h2 class="text-2xl font-bold text-indigo-300 mb-4 text-center">AIdent — Проверка текста на ИИ</h2>
+<p class="text-center text-indigo-400 mb-6">Распознаёт, написан ли текст человеком или ИИ<br>(модель: fakespot-ai/roberta-base-ai-text-detection-v1)</p>
 
-<textarea
-id="userInput"
-rows="6"
-placeholder="Вставьте текст для проверки..."
-class="w-full p-4 rounded bg-slate-900 border border-slate-700 resize-y"
-></textarea>
+<textarea id="userInput" rows="6" placeholder="Вставьте текст для проверки..." class="w-full p-4 rounded bg-slate-900 border border-slate-700 resize-y"></textarea>
 
-<button
-id="checkBtn"
-class="w-full mt-6 bg-indigo-600 hover:bg-indigo-500 p-4 rounded text-lg font-medium transition">
-Проверить
-</button>
+<button id="checkBtn" class="w-full mt-6 bg-indigo-600 hover:bg-indigo-500 p-4 rounded text-lg font-medium transition">Проверить</button>
 
-<div id="result" class="mt-6 text-center text-slate-300 min-h-[80px]">
-Результат появится здесь
-</div>
+<div id="result" class="mt-6 text-center text-slate-300 min-h-[80px]">Результат появится здесь</div>
 </section>
 
 <main class="container mx-auto px-6 py-16">
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
+<!-- Здесь все 6 твоих проектов — они на месте -->
 <div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-<video controls class="w-full h-48 object-cover">
-<source src="project1.mp4" type="video/mp4">
-</video>
-<div class="p-4">
-<h3 class="text-indigo-300 font-bold">Шум и фильтры</h3>
-<p class="text-sm text-slate-400">
-Очистка изображений с помощью Blur, Gaussian и Median фильтров.
-</p>
+<video controls class="w-full h-48 object-cover"><source src="project1.mp4" type="video/mp4"></video>
+<div class="p-4"><h3 class="text-indigo-300 font-bold">Шум и фильтры</h3><p class="text-sm text-slate-400">Очистка изображений с помощью Blur, Gaussian и Median фильтров.</p></div>
 </div>
-</div>
-
 <div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-<video controls class="w-full h-48 object-cover">
-<source src="project2.mp4" type="video/mp4">
-</video>
-<div class="p-4">
-<h3 class="text-indigo-300 font-bold">Детекция границ</h3>
-<p class="text-sm text-slate-400">
-Использование операторов Sobel и Laplacian.
-</p>
+<video controls class="w-full h-48 object-cover"><source src="project2.mp4" type="video/mp4"></video>
+<div class="p-4"><h3 class="text-indigo-300 font-bold">Детекция границ</h3><p class="text-sm text-slate-400">Использование операторов Sobel и Laplacian.</p></div>
 </div>
-</div>
-
 <div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-<video controls class="w-full h-48 object-cover">
-<source src="project3.mp4" type="video/mp4">
-</video>
-<div class="p-4">
-<h3 class="text-indigo-300 font-bold">Детектор Canny</h3>
-<p class="text-sm text-slate-400">
-Получение точных контуров объектов.
-</p>
+<video controls class="w-full h-48 object-cover"><source src="project3.mp4" type="video/mp4"></video>
+<div class="p-4"><h3 class="text-indigo-300 font-bold">Детектор Canny</h3><p class="text-sm text-slate-400">Получение точных контуров объектов.</p></div>
 </div>
-</div>
-
 <div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-<video controls class="w-full h-48 object-cover">
-<source src="project4.mp4" type="video/mp4">
-</video>
-<div class="p-4">
-<h3 class="text-indigo-300 font-bold">Бинаризация</h3>
-<p class="text-sm text-slate-400">
-Пороговые методы Simple и Otsu.
-</p>
+<video controls class="w-full h-48 object-cover"><source src="project4.mp4" type="video/mp4"></video>
+<div class="p-4"><h3 class="text-indigo-300 font-bold">Бинаризация</h3><p class="text-sm text-slate-400">Пороговые методы Simple и Otsu.</p></div>
 </div>
-</div>
-
 <div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-<video controls class="w-full h-48 object-cover">
-<source src="project5.mp4" type="video/mp4">
-</video>
-<div class="p-4">
-<h3 class="text-indigo-300 font-bold">Морфология</h3>
-<p class="text-sm text-slate-400">
-Open и Close операции для очистки масок.
-</p>
+<video controls class="w-full h-48 object-cover"><source src="project5.mp4" type="video/mp4"></video>
+<div class="p-4"><h3 class="text-indigo-300 font-bold">Морфология</h3><p class="text-sm text-slate-400">Open и Close операции для очистки масок.</p></div>
 </div>
-</div>
-
 <div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-<video controls class="w-full h-48 object-cover">
-<source src="project6.mp4" type="video/mp4">
-</video>
-<div class="p-4">
-<h3 class="text-indigo-300 font-bold">
-Детекция и подсчет объектов
-</h3>
-<p class="text-sm text-slate-400">
-Bounding Box и фильтрация контуров по площади.
-</p>
+<video controls class="w-full h-48 object-cover"><source src="project6.mp4" type="video/mp4"></video>
+<div class="p-4"><h3 class="text-indigo-300 font-bold">Детекция и подсчет объектов</h3><p class="text-sm text-slate-400">Bounding Box и фильтрация контуров по площади.</p></div>
 </div>
-</div>
-
 </div>
 </main>
 
@@ -151,14 +67,14 @@ Bounding Box и фильтрация контуров по площади.
 
 <script>
 const API_URL = "https://router.huggingface.co/hf-inference/models/fakespot-ai/roberta-base-ai-text-detection-v1";
-const API_TOKEN = "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";  
+const API_TOKEN = "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"; 
 
 document.getElementById("checkBtn").addEventListener("click", async () => {
     const input = document.getElementById("userInput").value.trim();
     const result = document.getElementById("result");
 
     if (input.length < 30) {
-        result.innerHTML = '<span class="text-red-400">Введите хотя бы 30 символов для точной проверки</span>';
+        result.innerHTML = '<span class="text-red-400">Введите хотя бы 30 символов</span>';
         return;
     }
 
@@ -174,44 +90,30 @@ document.getElementById("checkBtn").addEventListener("click", async () => {
             body: JSON.stringify({ inputs: input })
         });
 
-        if (!res.ok) {
-            throw new Error(`HTTP ${res.status}: ${res.statusText}`);
-        }
+        if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
 
         const json = await res.json();
 
-        if (!Array.isArray(json) || json.length === 0) {
-            throw new Error("Неожиданный формат ответа");
-        }
+        if (!Array.isArray(json) || json.length === 0) throw new Error("Неожиданный ответ");
 
         const top = json[0];
         const label = top.label.toLowerCase();
         const score = top.score;
 
-        let aiProb = 0;
-        let humanProb = 0;
-
-        if (label.includes("ai") || label.includes("fake") || label.includes("generated")) {
-            aiProb = (score * 100).toFixed(1);
-            humanProb = (100 - aiProb).toFixed(1);
-        } else {
-            humanProb = (score * 100).toFixed(1);
-            aiProb = (100 - humanProb).toFixed(1);
-        }
+        let ai = label.includes('ai') || label.includes('fake') || label.includes('generated') ? score : 1 - score;
+        let human = 1 - ai;
 
         result.innerHTML = `
             <div class="text-2xl font-bold mt-2">
-                🤖 ИИ: <span class="text-red-400">${aiProb}%</span><br>
-                👤 Человек: <span class="text-green-400">${humanProb}%</span>
+                🤖 ИИ: <span class="text-red-400">${(ai * 100).toFixed(1)}%</span><br>
+                👤 Человек: <span class="text-green-400">${(human * 100).toFixed(1)}%</span>
             </div>
-            <div class="text-sm text-slate-500 mt-3">
-                (уверенность модели: ${Math.max(aiProb, humanProb)}%)
-            </div>
+            <div class="text-sm text-slate-500 mt-2">(модель уверена на ${(Math.max(ai, human) * 100).toFixed(0)}%)</div>
         `;
 
     } catch (err) {
         console.error(err);
-        result.innerHTML = `<span class="text-red-400">Ошибка: ${err.message || 'попробуйте позже'}</span><br>Возможно, лимит API или неверный токен.`;
+        result.innerHTML = `<span class="text-red-400">Ошибка: ${err.message}</span><br>Проверь новый токен (создай fine-grained с правом Inference Providers)`;
     }
 });
 </script>
