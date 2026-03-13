@@ -1,148 +1,38 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dalida Portfolio | AIdent AI</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap');
-        body { font-family: 'Space Grotesk', sans-serif; background: #0f172a; color: #f8fafc; }
-        .glow-card:hover { transform: translateY(-8px); box-shadow: 0 0 25px rgba(99, 102, 241, 0.4); transition: 0.3s; border-color: #6366f1; }
-        .gradient-text { background: linear-gradient(90deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .ai-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(99, 102, 241, 0.2); }
-        .loader-spin { border-top-color: #6366f1; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    </style>
-</head>
-<body>
+<script type="module">
+    import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2';
 
-    <header class="py-16 px-6 text-center border-b border-slate-800 bg-slate-900/50">
-        <h1 class="text-5xl md:text-6xl font-bold mb-4 gradient-text">Рысмендеева Далида</h1>
-        <p class="text-xl text-indigo-300 font-light tracking-widest uppercase">24 ШГ • 10 КЛАСС • CV & AI DEVELOPER</p>
-        <div class="mt-4 text-slate-500 text-sm">
-            <span><i class="fas fa-envelope mr-2"></i>rysmendeevadalida01@gmail.com</span>
-            <span class="ml-6"><i class="fas fa-phone mr-2"></i>+996 554 306 190</span>
-        </div>
-    </header>
+    // Настройки: разрешаем только удаленные модели и кэширование в браузере
+    env.allowLocalModels = false;
+    env.useBrowserCache = true;
 
-    <main class="container mx-auto px-6 py-16">
-        
-        <section class="max-w-3xl mx-auto mb-24 ai-panel rounded-3xl p-8 shadow-2xl">
-            <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold mb-2 gradient-text uppercase">AIdent Tool v2</h2>
-                <p class="text-slate-400 text-sm italic">Используется облегченная модель локального запуска</p>
-                <div id="modelStatus" class="flex items-center justify-center gap-2 text-indigo-400 text-xs mt-3">
-                    <div id="statusDot" class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></div>
-                    <span id="statusText">Загрузка нейросети...</span>
-                </div>
-            </div>
+    const btn = document.getElementById('checkBtn');
+    const statusText = document.getElementById('statusText');
+    let classifier;
 
-            <textarea id="aiInput" rows="5" 
-                class="w-full bg-slate-900/80 border border-slate-700 rounded-2xl p-4 text-slate-200 focus:border-indigo-500 outline-none transition-all mb-4"
-                placeholder="Вставьте английский текст для анализа..."></textarea>
+    // Функция инициализации
+    async function initModel() {
+        try {
+            // Инициализируем модель (скачается только 1 раз)
+            classifier = await pipeline('text-classification', 'silentone0725/text-detector-model-v2', {
+                device: 'webgpu', // Пробуем запустить на видеокарте для скорости
+            });
+            
+            statusText.innerText = "Нейросеть готова (Local)";
+            btn.disabled = false;
+        } catch (e) {
+            // Если WebGPU не поддерживается, откатываемся на обычный процессор (WASM)
+            classifier = await pipeline('text-classification', 'silentone0725/text-detector-model-v2');
+            statusText.innerText = "Нейросеть готова (CPU)";
+            btn.disabled = false;
+        }
+    }
 
-            <button id="checkBtn" disabled 
-                class="w-full py-4 bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-800 disabled:text-slate-500 text-white font-bold rounded-xl transition-all shadow-lg active:scale-95">
-                Проверить текст
-            </button>
+    initModel();
 
-            <div id="aiResult" class="hidden mt-8 transition-opacity duration-500">
-                </div>
-        </section>
-
-        <h2 class="text-2xl font-bold mb-10 text-slate-400 uppercase tracking-widest border-l-4 border-indigo-500 pl-4">Computer Vision Projects</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <script>
-                const projects = [
-                    { t: "Шум и Фильтры", d: "Очистка изображений (Blur, Gaussian, Median)." },
-                    { t: "Детекция границ", d: "Поиск контуров через Sobel и Laplacian." },
-                    { t: "Детектор Canny", d: "Алгоритм для сверхточных границ объектов." },
-                    { t: "Бинаризация", d: "Преобразование в Ч/Б через Simple и Otsu." },
-                    { t: "Морфология", d: "Очистка масок (Open/Close операции)." },
-                    { t: "Детекция и подсчет", d: "Автоматический поиск объектов и Bounding Box." }
-                ];
-                projects.forEach((p, i) => {
-                    document.write(`
-                        <div class="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden glow-card">
-                            <video controls class="w-full h-48 object-cover"><source src="project${i+1}.mp4" type="video/mp4"></video>
-                            <div class="p-6"><h3 class="text-lg font-bold mb-2 text-indigo-300">${p.t}</h3><p class="text-sm text-slate-400">${p.d}</p></div>
-                        </div>
-                    `);
-                });
-            </script>
-        </div>
-    </main>
-
-    <footer class="text-center py-12 text-slate-600 text-xs border-t border-slate-900">
-        <p>© 2026 • Рысмендеева Далида • Transformers.js Integration</p>
-    </footer>
-
-    <script type="module">
-        import { pipeline } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2';
-
-        const statusText = document.getElementById('statusText');
-        const statusDot = document.getElementById('statusDot');
-        const btn = document.getElementById('checkBtn');
-        const resultDiv = document.getElementById('aiResult');
-        let classifier;
-
-        // Инициализация модели
-        (async () => {
-            try {
-                classifier = await pipeline('text-classification', 'silentone0725/text-detector-model-v2');
-                statusText.innerText = "Нейросеть готова";
-                statusDot.classList.remove('bg-yellow-500', 'animate-pulse');
-                statusDot.classList.add('bg-emerald-500');
-                btn.disabled = false;
-            } catch (err) {
-                statusText.innerText = "Ошибка загрузки модели";
-                statusDot.classList.add('bg-red-500');
-                console.error(err);
-            }
-        })();
-
-        btn.addEventListener('click', async () => {
-            const text = document.getElementById('aiInput').value.trim();
-            if (text.length < 20) return alert("Текст слишком короткий для анализа.");
-
-            btn.disabled = true;
-            btn.innerText = "Анализирую...";
-            resultDiv.classList.add('hidden');
-
-            try {
-                const output = await classifier(text);
-                const score = output[0].score;
-                const label = output[0].label; 
-
-                // Логика определения ИИ для этой модели
-                let aiScore = label.toLowerCase().includes('ai') || label.toLowerCase().includes('generated') ? score : 1 - score;
-                let humanScore = 1 - aiScore;
-
-                resultDiv.innerHTML = `
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-slate-900/80 p-6 rounded-2xl border border-red-500/30 text-center shadow-inner">
-                            <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">AI</p>
-                            <p class="text-4xl font-bold text-red-500">${(aiScore * 100).toFixed(1)}%</p>
-                        </div>
-                        <div class="bg-slate-900/80 p-6 rounded-2xl border border-emerald-500/30 text-center shadow-inner">
-                            <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Human</p>
-                            <p class="text-4xl font-bold text-emerald-500">${(humanScore * 100).toFixed(1)}%</p>
-                        </div>
-                    </div>
-                    <p class="mt-4 text-center text-sm font-medium ${aiScore > 0.5 ? 'text-red-400' : 'text-emerald-400'}">
-                        ${aiScore > 0.5 ? '⚠️ Вероятно, сгенерировано нейросетью' : '✅ Похоже на текст человека'}
-                    </p>
-                `;
-                resultDiv.classList.remove('hidden');
-            } catch (e) {
-                alert("Ошибка анализа: " + e.message);
-            } finally {
-                btn.disabled = false;
-                btn.innerText = "Проверить текст";
-            }
-        });
-    </script>
-</body>
-</html>
+    btn.addEventListener('click', async () => {
+        const text = document.getElementById('aiInput').value;
+        const output = await classifier(text);
+        console.log(output); // Видим результат прямо в консоли браузера
+        // ... тут твоя логика вывода процентов ...
+    });
+</script>
