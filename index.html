@@ -31,11 +31,10 @@ textarea{color:white;}
 <button id="checkBtn" class="w-full mt-6 bg-indigo-600 hover:bg-indigo-500 p-4 rounded text-lg font-medium transition" disabled>Проверить</button>
 
 <div id="result" class="mt-6 text-center text-slate-300 min-h-[100px]">
-<span id="loading-model">Загружаю модель (~140 МБ, первый раз 20–120 сек)...</span>
+<span id="loading-model">Загружаю модель (V2)... Первый запуск может занять до 1 минуты.</span>
 </div>
 </section>
 
-<!-- 6 проектов полностью на месте -->
 <main class="container mx-auto px-6 py-16">
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 <div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
@@ -72,11 +71,11 @@ textarea{color:white;}
 </footer>
 
 <script type="module">
-  import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.0-alpha.0/dist/transformers.min.js';
+  // Используем последнюю стабильную версию transformers.js
+  import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2';
 
-  // Важно: отключаем любые попытки использовать локальные/токен-модели
+  // Настройки окружения
   env.allowLocalModels = false;
-  env.allowRemoteModels = true;
   env.useBrowserCache = true;
 
   let classifier = null;
@@ -84,14 +83,14 @@ textarea{color:white;}
   async function loadModel() {
     const loading = document.getElementById('loading-model');
     try {
-      classifier = await pipeline('text-classification', 'fakespot-ai/roberta-base-ai-text-detection-v1', {
-        quantized: true,  // легче и быстрее в браузере
-      });
-      loading.innerText = 'Модель готова! ✅';
+      // Подключаем именно silentone0725/text-detector-model-v2
+      classifier = await pipeline('text-classification', 'silentone0725/text-detector-model-v2');
+      
+      loading.innerText = 'Модель V2 готова к работе! ✅';
       document.getElementById('checkBtn').disabled = false;
     } catch (err) {
-      console.error('Ошибка:', err);
-      loading.innerHTML = `<span style="color:red">Не удалось загрузить модель: ${err.message || 'попробуй позже'}</span><br>Открой в Chrome/Edge, обнови страницу.`;
+      console.error('Ошибка загрузки:', err);
+      loading.innerHTML = `<span style="color:red">Ошибка: ${err.message}</span>`;
     }
   }
 
@@ -99,40 +98,46 @@ textarea{color:white;}
 
   document.getElementById('checkBtn').addEventListener('click', async () => {
     const text = document.getElementById('userInput').value.trim();
-    const result = document.getElementById('result');
+    const resultDiv = document.getElementById('result');
 
-    if (text.length < 30) {
-      result.innerHTML = '<span style="color:red">Минимум 30 символов!</span>';
+    if (text.length < 50) {
+      resultDiv.innerHTML = '<span style="color:orange">Введите хотя бы 50 символов для точного анализа.</span>';
       return;
     }
 
-    if (!classifier) {
-      result.innerHTML = '<span style="color:orange">Модель загружается...</span>';
-      return;
-    }
-
-    result.innerHTML = 'Анализ... ⏳';
+    resultDiv.innerHTML = 'Анализирую текст... ⏳';
 
     try {
-      const output = await classifier(text, { truncation: true, max_length: 512 });
-      const top = output[0];
-      const label = top.label.toLowerCase();
-      const score = top.score;
+      // Запуск классификации
+      // top_k: null вернет вероятности для всех меток (LABEL_0 и LABEL_1)
+      const output = await classifier(text, { top_k: null });
+      
+      // В этой модели: 
+      // LABEL_0 обычно Human
+      // LABEL_1 обычно AI
+      let aiScore = 0;
+      let humanScore = 0;
 
-      let ai = (label.includes('ai') || label.includes('fake') || label.includes('generated')) ? score : 1 - score;
-      let human = 1 - ai;
+      output.forEach(item => {
+        if (item.label === 'LABEL_1') aiScore = item.score;
+        if (item.label === 'LABEL_0') humanScore = item.score;
+      });
 
-      result.innerHTML = `
-        <div style="font-size:1.8rem;font-weight:bold;margin:1rem 0;">
-          🤖 ИИ: <span style="color:#ef4444">${(ai*100).toFixed(1)}%</span><br>
-          👤 Человек: <span style="color:#10b981">${(human*100).toFixed(1)}%</span>
+      // Переводим в проценты
+      const aiPercent = (aiScore * 100).toFixed(1);
+      const humanPercent = (humanScore * 100).toFixed(1);
+
+      resultDiv.innerHTML = `
+        <div style="font-size:1.6rem; font-weight:bold; margin-top:1rem;">
+          <div class="mb-2">🤖 ИИ: <span style="color:#ef4444">${aiPercent}%</span></div>
+          <div>👤 Человек: <span style="color:#10b981">${humanPercent}%</span></div>
         </div>
-        <div style="color:#94a3b8;font-size:0.9rem;">
-          (уверенность модели: ${Math.round(Math.max(ai,human)*100)}%)
-        </div>
+        <p class="mt-4 text-sm text-slate-400">
+          Вердикт: ${aiScore > 0.5 ? 'Скорее всего, текст написан нейросетью' : 'Текст похож на написанный человеком'}
+        </p>
       `;
     } catch (err) {
-      result.innerHTML = `<span style="color:red">Ошибка анализа: ${err.message}</span>`;
+      resultDiv.innerHTML = `<span style="color:red">Ошибка при проверке: ${err.message}</span>`;
     }
   });
 </script>
