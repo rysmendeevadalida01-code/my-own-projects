@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,13 +29,15 @@ background:linear-gradient(90deg,#818cf8,#c084fc);
 -webkit-text-fill-color:transparent;
 }
 
+textarea{
+color:white;
+}
+
 </style>
 
 </head>
 
 <body>
-
-<!-- HEADER -->
 
 <header class="text-center py-12 border-b border-slate-700">
 
@@ -48,9 +51,6 @@ background:linear-gradient(90deg,#818cf8,#c084fc);
 
 </header>
 
-
-
-<!-- AIDENT -->
 
 <section class="max-w-3xl mx-auto mt-16 p-8 bg-slate-800 rounded-xl">
 
@@ -79,152 +79,88 @@ class="w-full mt-4 bg-indigo-600 p-3 rounded hover:bg-indigo-500">
 
 
 
-<!-- PROJECTS -->
-
 <main class="container mx-auto px-6 py-16">
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-<!-- PROJECT 1 -->
 
 <div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-
 <video controls class="w-full h-48 object-cover">
 <source src="project1.mp4" type="video/mp4">
 </video>
-
 <div class="p-4">
-
-<h3 class="text-indigo-300 font-bold">
-Шум и фильтры
-</h3>
-
+<h3 class="text-indigo-300 font-bold">Шум и фильтры</h3>
 <p class="text-sm text-slate-400">
 Очистка изображений с помощью Blur, Gaussian и Median фильтров.
 </p>
-
+</div>
 </div>
 
-</div>
-
-
-
-<!-- PROJECT 2 -->
 
 <div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-
 <video controls class="w-full h-48 object-cover">
 <source src="project2.mp4" type="video/mp4">
 </video>
-
 <div class="p-4">
-
-<h3 class="text-indigo-300 font-bold">
-Детекция границ
-</h3>
-
+<h3 class="text-indigo-300 font-bold">Детекция границ</h3>
 <p class="text-sm text-slate-400">
 Использование операторов Sobel и Laplacian.
 </p>
-
+</div>
 </div>
 
-</div>
-
-
-
-<!-- PROJECT 3 -->
 
 <div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-
 <video controls class="w-full h-48 object-cover">
 <source src="project3.mp4" type="video/mp4">
 </video>
-
 <div class="p-4">
-
-<h3 class="text-indigo-300 font-bold">
-Детектор Canny
-</h3>
-
+<h3 class="text-indigo-300 font-bold">Детектор Canny</h3>
 <p class="text-sm text-slate-400">
 Получение точных контуров объектов.
 </p>
-
+</div>
 </div>
 
-</div>
-
-
-
-<!-- PROJECT 4 -->
 
 <div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-
 <video controls class="w-full h-48 object-cover">
 <source src="project4.mp4" type="video/mp4">
 </video>
-
 <div class="p-4">
-
-<h3 class="text-indigo-300 font-bold">
-Бинаризация
-</h3>
-
+<h3 class="text-indigo-300 font-bold">Бинаризация</h3>
 <p class="text-sm text-slate-400">
 Пороговые методы Simple и Otsu.
 </p>
-
+</div>
 </div>
 
-</div>
-
-
-
-<!-- PROJECT 5 -->
 
 <div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-
 <video controls class="w-full h-48 object-cover">
 <source src="project5.mp4" type="video/mp4">
 </video>
-
 <div class="p-4">
-
-<h3 class="text-indigo-300 font-bold">
-Морфология
-</h3>
-
+<h3 class="text-indigo-300 font-bold">Морфология</h3>
 <p class="text-sm text-slate-400">
 Open и Close операции для очистки масок.
 </p>
-
+</div>
 </div>
 
-</div>
-
-
-
-<!-- PROJECT 6 -->
 
 <div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
-
 <video controls class="w-full h-48 object-cover">
 <source src="project6.mp4" type="video/mp4">
 </video>
-
 <div class="p-4">
-
 <h3 class="text-indigo-300 font-bold">
 Детекция и подсчет объектов
 </h3>
-
 <p class="text-sm text-slate-400">
 Bounding Box и фильтрация контуров по площади.
 </p>
-
 </div>
-
 </div>
 
 </div>
@@ -232,8 +168,6 @@ Bounding Box и фильтрация контуров по площади.
 </main>
 
 
-
-<!-- FOOTER -->
 
 <footer class="text-center py-10 border-t border-slate-800 text-slate-400 text-sm">
 
@@ -257,9 +191,17 @@ rysmendeevadalida01@gmail.com
 
 const API_URL="https://api-inference.huggingface.co/models/openai-community/roberta-base-openai-detector"
 
-const API_TOKEN="ВАШ_ТОКЕН"
+const API_TOKEN="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"
 
-async function checkText(text){
+document.getElementById("checkBtn").addEventListener("click",async()=>{
+
+const text=document.getElementById("userInput").value
+
+const result=document.getElementById("result")
+
+result.innerText="Анализирую..."
+
+try{
 
 const response=await fetch(API_URL,{
 method:"POST",
@@ -270,31 +212,26 @@ Authorization:`Bearer ${API_TOKEN}`,
 body:JSON.stringify({inputs:text})
 })
 
-return await response.json()
+const data=await response.json()
 
-}
-
-document.getElementById("checkBtn").addEventListener("click",async()=>{
-
-const text=document.getElementById("userInput").value
-
-const result=document.getElementById("result")
-
-result.innerText="Анализирую..."
-
-const data=await checkText(text)
-
-const fake=data[0].find(x=>x.label==="Fake").score
-const real=data[0].find(x=>x.label==="Real").score
+const fake=data.find(x=>x.label==="Fake")?.score||0
+const real=data.find(x=>x.label==="Real")?.score||0
 
 result.innerHTML=`
 ИИ: ${(fake*100).toFixed(2)}% <br>
 Человек: ${(real*100).toFixed(2)}%
 `
 
+}catch(err){
+
+result.innerText="Ошибка соединения с моделью"
+
+}
+
 })
 
 </script>
 
 </body>
+
 </html>
