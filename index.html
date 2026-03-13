@@ -30,16 +30,16 @@
                 <h2 class="text-3xl font-bold mb-2 uppercase tracking-widest">AIdent</h2>
                 <div id="loader-box" class="flex items-center gap-2 text-[10px] font-bold text-indigo-400">
                     <div id="status-dot" class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></div>
-                    <span id="status-text">ЗАГРУЗКА МОДЕЛИ...</span>
+                    <span id="status-text">ПОДГОТОВКА МОДЕЛИ...</span>
                 </div>
             </div>
 
             <textarea id="userInput" rows="6" 
                 class="w-full bg-slate-900/50 border border-slate-700 rounded-2xl p-5 text-sm outline-none focus:border-indigo-500 transition-all mb-6 placeholder:text-slate-600 text-white"
-                placeholder="Вставьте английский текст (минимум 30 символов) для анализа нейросетью..."></textarea>
+                placeholder="Вставьте английский текст для анализа..."></textarea>
 
             <button id="runBtn" disabled class="glow-button w-full py-4 rounded-xl font-bold uppercase tracking-widest text-sm">
-                Подождите, модель загружается...
+                Загрузка нейросети...
             </button>
 
             <div id="resultArea" class="hidden mt-10 space-y-6 pt-6 border-t border-slate-800">
@@ -89,80 +89,62 @@
     <script type="module">
         import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2';
 
-        // Настройки для стабильной работы в браузере
+        // Принудительно отключаем поиск локальных моделей
         env.allowLocalModels = false;
-        env.useBrowserCache = true;
 
         const statusText = document.getElementById('status-text');
         const statusDot = document.getElementById('status-dot');
         const btn = document.getElementById('runBtn');
         const resArea = document.getElementById('resultArea');
-        const aiValText = document.getElementById('aiVal');
-        const humanValText = document.getElementById('humanVal');
-        
-        let detector;
 
-        // Инициализация модели
-        (async () => {
+        let classifier;
+
+        async function loadModel() {
             try {
-                statusText.innerText = "ЗАГРУЗКА МОДЕЛИ (~120MB)...";
-                // Используем стабильную модель для детекции AI-текста
-                detector = await pipeline('text-classification', 'Xenova/roberta-base-openai-detector');
+                statusText.innerText = "ЗАГРУЗКА ВЕСОВ...";
+                // Прямое указание нужной тебе модели
+                classifier = await pipeline('text-classification', 'silentone0725/text-detector-model-v2');
                 
                 statusText.innerText = "ГОТОВО К РАБОТЕ ✅";
                 statusDot.className = "w-2 h-2 rounded-full bg-emerald-500";
                 btn.disabled = false;
                 btn.innerText = "Проверить текст";
             } catch (err) {
-                statusText.innerText = "ОШИБКА ЗАГРУЗКИ";
+                statusText.innerText = "ОШИБКА ПОДКЛЮЧЕНИЯ";
                 statusDot.className = "w-2 h-2 rounded-full bg-red-500";
-                console.error("Ошибка при инициализации модели:", err);
+                console.error(err);
             }
-        })();
+        }
 
         btn.onclick = async () => {
-            const text = document.getElementById('userInput').value.trim();
-            if (text.length < 30) {
-                alert("Пожалуйста, введите текст длиннее 30 символов для корректного анализа.");
-                return;
-            }
+            const input = document.getElementById('userInput').value.trim();
+            if (input.length < 20) return alert("Введите более длинный текст");
 
             btn.disabled = true;
-            btn.innerText = "АНАЛИЗ В БРАУЗЕРЕ...";
-            resArea.classList.add('hidden');
+            btn.innerText = "АНАЛИЗ...";
 
             try {
-                // Выполнение классификации
-                const output = await detector(text);
-                const result = output[0];
+                const results = await classifier(input);
+                const result = results[0];
                 
-                // Логика Xenova/roberta-base-openai-detector:
-                // LABEL_0 — это Real (человек), LABEL_1 — это Fake (ИИ)
-                let aiScore, humanScore;
-                
-                if (result.label === 'Fake' || result.label === 'LABEL_1') {
-                    aiScore = result.score;
-                    humanScore = 1 - aiScore;
-                } else {
-                    humanScore = result.score;
-                    aiScore = 1 - humanScore;
-                }
+                // В этой модели LABEL_1 — это AI, LABEL_0 — Human
+                let aiScore = result.label === 'LABEL_1' ? result.score : 1 - result.score;
+                let humanScore = 1 - aiScore;
 
-                // Вывод результатов
-                aiValText.innerText = (aiScore * 100).toFixed(1) + "%";
-                humanValText.innerText = (humanScore * 100).toFixed(1) + "%";
+                document.getElementById('aiVal').innerText = (aiScore * 100).toFixed(1) + "%";
+                document.getElementById('humanVal').innerText = (humanScore * 100).toFixed(1) + "%";
                 
                 resArea.classList.remove('hidden');
                 resArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
             } catch (e) {
-                console.error("Ошибка анализа:", e);
-                alert("Произошла ошибка при анализе текста.");
+                alert("Ошибка анализа. Попробуйте другой текст.");
             } finally {
                 btn.disabled = false;
                 btn.innerText = "Проверить текст";
             }
         };
+
+        loadModel();
     </script>
 </body>
 </html>
