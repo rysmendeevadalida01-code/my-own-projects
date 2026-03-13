@@ -42,10 +42,10 @@ AIdent — Проверка текста на ИИ
 </h2>
 <p class="text-center text-indigo-400 mb-6">
 Распознаёт ИИ-текст от человеческого<br>
-с помощью модели <strong>fakespot-ai/roberta-base-ai-text-detection-v1</strong>
+с помощью современной модели <strong>fakespot-ai/roberta-base-ai-text-detection-v1</strong>
 </p>
 
-<!-- Ссылка на модель -->
+<!-- Ссылка на модель (красивая кнопка) -->
 <div class="text-center mb-6">
 <a href="https://huggingface.co/fakespot-ai/roberta-base-ai-text-detection-v1" 
    target="_blank"
@@ -65,29 +65,91 @@ class="w-full p-4 rounded bg-slate-900 border border-slate-700"
 <button
 id="checkBtn"
 class="w-full mt-6 bg-indigo-600 hover:bg-indigo-500 p-4 rounded text-lg font-medium transition">
-Проверить на Hugging Face →
+Проверить → (перенос на HF)
 </button>
 
 <div id="result" class="mt-6 text-center text-slate-300 text-sm">
-После нажатия кнопки вас перенесёт на страницу модели.<br>
-Просто вставьте туда свой текст и нажмите «Compute».
+Результат появится на странице модели Hugging Face после вставки текста и нажатия Compute.
 </div>
 </section>
 
 <main class="container mx-auto px-6 py-16">
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-<!-- твои 6 проектов (оставил без изменений) -->
+
 <div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
 <video controls class="w-full h-48 object-cover">
 <source src="project1.mp4" type="video/mp4">
 </video>
 <div class="p-4">
 <h3 class="text-indigo-300 font-bold">Шум и фильтры</h3>
-<p class="text-sm text-slate-400">Очистка изображений с помощью Blur, Gaussian и Median фильтров.</p>
+<p class="text-sm text-slate-400">
+Очистка изображений с помощью Blur, Gaussian и Median фильтров.
+</p>
 </div>
 </div>
-<!-- ... (остальные 5 карточек точно такие же, как у тебя раньше) ... -->
-<!-- для краткости я не повторяю все 6, просто скопируй их из старого файла -->
+
+<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
+<video controls class="w-full h-48 object-cover">
+<source src="project2.mp4" type="video/mp4">
+</video>
+<div class="p-4">
+<h3 class="text-indigo-300 font-bold">Детекция границ</h3>
+<p class="text-sm text-slate-400">
+Использование операторов Sobel и Laplacian.
+</p>
+</div>
+</div>
+
+<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
+<video controls class="w-full h-48 object-cover">
+<source src="project3.mp4" type="video/mp4">
+</video>
+<div class="p-4">
+<h3 class="text-indigo-300 font-bold">Детектор Canny</h3>
+<p class="text-sm text-slate-400">
+Получение точных контуров объектов.
+</p>
+</div>
+</div>
+
+<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
+<video controls class="w-full h-48 object-cover">
+<source src="project4.mp4" type="video/mp4">
+</video>
+<div class="p-4">
+<h3 class="text-indigo-300 font-bold">Бинаризация</h3>
+<p class="text-sm text-slate-400">
+Пороговые методы Simple и Otsu.
+</p>
+</div>
+</div>
+
+<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
+<video controls class="w-full h-48 object-cover">
+<source src="project5.mp4" type="video/mp4">
+</video>
+<div class="p-4">
+<h3 class="text-indigo-300 font-bold">Морфология</h3>
+<p class="text-sm text-slate-400">
+Open и Close операции для очистки масок.
+</p>
+</div>
+</div>
+
+<div class="bg-slate-800 rounded-xl overflow-hidden glow-card">
+<video controls class="w-full h-48 object-cover">
+<source src="project6.mp4" type="video/mp4">
+</video>
+<div class="p-4">
+<h3 class="text-indigo-300 font-bold">
+Детекция и подсчет объектов
+</h3>
+<p class="text-sm text-slate-400">
+Bounding Box и фильтрация контуров по площади.
+</p>
+</div>
+</div>
+
 </div>
 </main>
 
@@ -98,20 +160,35 @@ class="w-full mt-6 bg-indigo-600 hover:bg-indigo-500 p-4 rounded text-lg font-me
 </footer>
 
 <script>
-// Кнопка теперь просто переносит на Hugging Face
-document.getElementById("checkBtn").addEventListener("click", () => {
+document.getElementById("checkBtn").addEventListener("click", async () => {
     const text = document.getElementById("userInput").value.trim();
     const resultDiv = document.getElementById("result");
 
     if (text.length < 30) {
-        resultDiv.innerHTML = `<span class="text-red-400">Введите минимум 30 символов!</span>`;
+        resultDiv.innerHTML = `<span class="text-red-400">Введите минимум 30 символов для нормальной проверки!</span>`;
         return;
     }
 
-    resultDiv.innerHTML = `Переносим на Hugging Face... ⏳`;
+    try {
+        // Копируем текст в буфер обмена
+        await navigator.clipboard.writeText(text);
+        
+        resultDiv.innerHTML = `
+            <span class="text-green-400">Текст скопирован в буфер! ✅</span><br>
+            Сейчас откроется страница модели на Hugging Face.<br>
+            Просто <b>вставь (Ctrl+V)</b> текст в поле и нажми Compute.
+        `;
 
-    // Открываем модель в новой вкладке
-    window.open("https://huggingface.co/fakespot-ai/roberta-base-ai-text-detection-v1", "_blank");
+        // Перенос через 1.5 секунды (чтобы пользователь успел прочитать)
+        setTimeout(() => {
+            window.open("https://huggingface.co/fakespot-ai/roberta-base-ai-text-detection-v1", "_blank");
+        }, 1500);
+
+    } catch (err) {
+        console.error('Ошибка копирования:', err);
+        resultDiv.innerHTML = `Не удалось скопировать текст автоматически.<br>Откроем модель — вставь текст вручную.`;
+        window.open("https://huggingface.co/fakespot-ai/roberta-base-ai-text-detection-v1", "_blank");
+    }
 });
 </script>
 </body>
